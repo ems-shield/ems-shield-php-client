@@ -1,0 +1,2817 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "ems-shield",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "https:\/\/ems-shield.ryan.ems-dev.net"
+        }
+    ],
+    "paths": {
+        "\/api\/me": {
+            "get": {
+                "tags": [
+                    "Manager:Me"
+                ],
+                "summary": "Get current user",
+                "operationId": "getUser",
+                "responses": {
+                    "200": {
+                        "description": "A User",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/UserResponse"
+                                },
+                                "example": {
+                                    "$ref": "#\/components\/examples\/MeIndexExampleResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/me\/notification": {
+            "get": {
+                "tags": [
+                    "Manager:MeNotification"
+                ],
+                "summary": "Current user notification list",
+                "description": "You can specify a GET parameter `read_status` to filter results.",
+                "operationId": "all",
+                "parameters": [
+                    {
+                        "name": "read_status",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "enum": [
+                                "read",
+                                "unread"
+                            ],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Include"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Search"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationPage"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationLimit"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/OrderBy"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A Notification list",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/NotificationListResponse"
+                                },
+                                "example": {
+                                    "$ref": "#\/components\/examples\/MeNotificationIndexExampleResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/me\/notification\/all\/read": {
+            "post": {
+                "tags": [
+                    "Manager:MeNotification"
+                ],
+                "summary": "Mark all user notifications as read",
+                "operationId": "markAllAsRead",
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/NoContentResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/me\/notification\/{notificationId}\/read": {
+            "post": {
+                "tags": [
+                    "Manager:MeNotification"
+                ],
+                "summary": "Mark the specified user notification as read",
+                "operationId": "markAsRead",
+                "parameters": [
+                    {
+                        "name": "notificationId",
+                        "in": "path",
+                        "description": "Notification UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A Notification",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/NotificationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/me\/notification\/{notificationId}\/unread": {
+            "post": {
+                "tags": [
+                    "Manager:MeNotification"
+                ],
+                "summary": "Mark the specified user notification as unread",
+                "operationId": "markAsUnread",
+                "parameters": [
+                    {
+                        "name": "notificationId",
+                        "in": "path",
+                        "description": "Notification UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A Notification",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/NotificationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/userGroup": {
+            "get": {
+                "tags": [
+                    "Manager:UserGroup"
+                ],
+                "summary": "Show User group list",
+                "operationId": "all",
+                "parameters": [
+                    {
+                        "$ref": "#\/components\/parameters\/Search"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationPage"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationLimit"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/OrderBy"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A UserGroup list",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/UserGroupListResponse"
+                                },
+                                "example": {
+                                    "$ref": "#\/components\/examples\/UserGroupIndexExampleResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/userGroup\/{userGroupId}": {
+            "get": {
+                "tags": [
+                    "Manager:UserGroup"
+                ],
+                "summary": "Get specified User group",
+                "operationId": "get",
+                "parameters": [
+                    {
+                        "name": "userGroupId",
+                        "in": "path",
+                        "description": "User Group Id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A UserGroup",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/UserGroupResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/user": {
+            "get": {
+                "tags": [
+                    "Manager:User"
+                ],
+                "summary": "User list",
+                "operationId": "all",
+                "parameters": [
+                    {
+                        "$ref": "#\/components\/parameters\/Search"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationPage"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationLimit"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/OrderBy"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A User list",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/UserListResponse"
+                                },
+                                "example": {
+                                    "$ref": "#\/components\/examples\/UserIndexExampleResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Manager:User"
+                ],
+                "summary": "Create and store new user",
+                "operationId": "create",
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "required": [
+                                    "user_group_id",
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "user_group_id": {
+                                        "enum": [
+                                            "Developer",
+                                            "Support",
+                                            "End-User"
+                                        ],
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "maxLength": 100,
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "maxLength": 150,
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "preferred_language": {
+                                        "maxLength": 30,
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "The created User",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/UserResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/user\/{userId}": {
+            "get": {
+                "tags": [
+                    "Manager:User"
+                ],
+                "summary": "Get specified user",
+                "operationId": "get",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "User UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A User",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/UserResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Manager:User",
+                    "Resource:User"
+                ],
+                "summary": "Update a specified user",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "User UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "required": [
+                                    "user_group_id",
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "user_group_id": {
+                                        "enum": [
+                                            "Developer",
+                                            "Support",
+                                            "End-User"
+                                        ],
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "maxLength": 100,
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "maxLength": 150,
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "preferred_language": {
+                                        "maxLength": 30,
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The updated User",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/UserResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Manager:User",
+                    "Resource:User"
+                ],
+                "summary": "Delete specified user",
+                "operationId": "delete",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "User UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Empty response"
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Manager:User",
+                    "Resource:User"
+                ],
+                "summary": "Update a specified user",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "User UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "required": [
+                                    "user_group_id",
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "user_group_id": {
+                                        "enum": [
+                                            "Developer",
+                                            "Support",
+                                            "End-User"
+                                        ],
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "maxLength": 100,
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "maxLength": 150,
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "preferred_language": {
+                                        "maxLength": 30,
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The updated User",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/UserResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/userGroup\/{userGroupId}\/user": {
+            "get": {
+                "tags": [
+                    "Resource:UserGroup"
+                ],
+                "summary": "User group user list",
+                "operationId": "getUsers",
+                "parameters": [
+                    {
+                        "name": "userGroupId",
+                        "in": "path",
+                        "description": "User Group ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Search"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationPage"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationLimit"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/OrderBy"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A User list",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/UserListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/i18nLang": {
+            "get": {
+                "tags": [
+                    "Manager:I18nLang"
+                ],
+                "summary": "Show i18n lang list",
+                "operationId": "all",
+                "parameters": [
+                    {
+                        "$ref": "#\/components\/parameters\/Include"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Search"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationPage"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationLimit"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/OrderBy"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A I18nLang list",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/I18nLangListResponse"
+                                },
+                                "example": {
+                                    "$ref": "#\/components\/examples\/I18nLangIndexExampleResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Manager:I18nLang"
+                ],
+                "summary": "Create and store new i18n lang",
+                "operationId": "create",
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "required": [
+                                    "id",
+                                    "description"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "maxLength": 30,
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "A I18nLangResponse",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/I18nLangResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/i18nLang\/{i18nLangId}": {
+            "get": {
+                "tags": [
+                    "Manager:I18nLang"
+                ],
+                "summary": "Get specified i18n lang",
+                "operationId": "get",
+                "parameters": [
+                    {
+                        "name": "i18nLangId",
+                        "in": "path",
+                        "description": "I18n lang UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Include"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A I18nLang",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/I18nLangResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Manager:I18nLang",
+                    "Resource:I18nLang"
+                ],
+                "summary": "Update a i18n lang",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "i18nLangId",
+                        "in": "path",
+                        "description": "I18n lang UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "required": [
+                                    "description"
+                                ],
+                                "properties": {
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The updated I18nLang",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/I18nLangResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Manager:I18nLang",
+                    "Resource:I18nLang"
+                ],
+                "summary": "Delete specified i18n Lang",
+                "description": "<aside class=\"warning\">Avoid using this feature ! Check foreign keys constraints to remove dependent resources properly before.<\/aside>",
+                "operationId": "delete",
+                "parameters": [
+                    {
+                        "name": "i18nLangId",
+                        "in": "path",
+                        "description": "I18n lang UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Empty response"
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Manager:I18nLang",
+                    "Resource:I18nLang"
+                ],
+                "summary": "Update a i18n lang",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "i18nLangId",
+                        "in": "path",
+                        "description": "I18n lang UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "required": [
+                                    "description"
+                                ],
+                                "properties": {
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The updated I18nLang",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/I18nLangResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/i18nLang\/search": {
+            "get": {
+                "tags": [
+                    "Manager:I18nLang"
+                ],
+                "summary": "Show i18n lang list",
+                "operationId": "all",
+                "parameters": [
+                    {
+                        "$ref": "#\/components\/parameters\/Include"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Search"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationPage"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationLimit"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/OrderBy"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A I18nLang list",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/I18nLangListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/user\/{userId}\/userHasProject": {
+            "get": {
+                "tags": [
+                    "Resource:User"
+                ],
+                "summary": "User relationship between users and projects list",
+                "description": "You can specify a GET parameter `user_role_id` to filter results.",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "User UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "user_role_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "enum": [
+                                "Owner",
+                                "Administrator"
+                            ],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Include"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Search"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationPage"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationLimit"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/OrderBy"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A UserHasProject list",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/UserHasProjectListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/project\/{projectId}\/userHasProject": {
+            "get": {
+                "tags": [
+                    "Resource:Project"
+                ],
+                "summary": "Project relationship between users and projects list",
+                "description": "You can specify a GET parameter `user_role_id` to filter results.",
+                "operationId": "getProjectHasUsers",
+                "parameters": [
+                    {
+                        "name": "projectId",
+                        "in": "path",
+                        "description": "Project UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "user_role_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "enum": [
+                                "Owner",
+                                "Administrator"
+                            ],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Search"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationPage"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationLimit"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/OrderBy"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A SyncTask list",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/UserHasProjectListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/user\/{userId}\/project": {
+            "get": {
+                "tags": [
+                    "Resource:User"
+                ],
+                "summary": "User project list",
+                "description": "You can specify a GET parameter `user_role_id` to filter results.",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "User UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "user_role_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "enum": [
+                                "Owner",
+                                "Administrator"
+                            ],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Include"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Search"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationPage"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationLimit"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/OrderBy"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A Project list",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ProjectListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/project": {
+            "get": {
+                "tags": [
+                    "Manager:Project"
+                ],
+                "summary": "Show project list",
+                "operationId": "all",
+                "parameters": [
+                    {
+                        "$ref": "#\/components\/parameters\/Include"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Search"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationPage"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationLimit"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/OrderBy"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A Project list",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ProjectListResponse"
+                                },
+                                "example": {
+                                    "$ref": "#\/components\/examples\/ProjectIndexExampleResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Manager:Project"
+                ],
+                "summary": "Create and store a new project",
+                "operationId": "create",
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "required": [],
+                                "properties": {
+                                    "name": {
+                                        "maxLength": 100,
+                                        "minLength": 5,
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "The created Project",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ProjectResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/project\/{projectId}": {
+            "get": {
+                "tags": [
+                    "Manager:Project"
+                ],
+                "summary": "Get specified project",
+                "operationId": "get",
+                "parameters": [
+                    {
+                        "name": "projectId",
+                        "in": "path",
+                        "description": "Project UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A Project",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ProjectResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Manager:Project",
+                    "Resource:Project"
+                ],
+                "summary": "Update a specified project",
+                "description": "<aside class=\"notice\">Only <code>Owner<\/code> of project is allowed to update it.<\/aside>",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "projectId",
+                        "in": "path",
+                        "description": "Project UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "required": [],
+                                "properties": {
+                                    "name": {
+                                        "maxLength": 100,
+                                        "minLength": 5,
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The updated Project",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ProjectResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Manager:Project",
+                    "Resource:Project"
+                ],
+                "summary": "Delete specified project",
+                "description": "All relationships between the project and his users will be automatically deleted too.<br \/>\n<aside class=\"notice\">Only <code>Owner<\/code> of project is allowed to delete it.<\/aside>",
+                "operationId": "delete",
+                "parameters": [
+                    {
+                        "name": "projectId",
+                        "in": "path",
+                        "description": "Project UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Empty response"
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Manager:Project",
+                    "Resource:Project"
+                ],
+                "summary": "Update a specified project",
+                "description": "<aside class=\"notice\">Only <code>Owner<\/code> of project is allowed to update it.<\/aside>",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "projectId",
+                        "in": "path",
+                        "description": "Project UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "required": [],
+                                "properties": {
+                                    "name": {
+                                        "maxLength": 100,
+                                        "minLength": 5,
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The updated Project",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ProjectResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/userHasProject": {
+            "get": {
+                "tags": [
+                    "Manager:UserHasProject"
+                ],
+                "summary": "List of relationships between users and projects",
+                "operationId": "all",
+                "parameters": [
+                    {
+                        "$ref": "#\/components\/parameters\/Include"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Search"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationPage"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationLimit"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/OrderBy"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A UserHasProject list",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/UserHasProjectListResponse"
+                                },
+                                "example": {
+                                    "$ref": "#\/components\/examples\/UserHasProjectIndexExampleResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Manager:UserHasProject"
+                ],
+                "summary": "Create and store new relationship between a user and a project",
+                "description": "<aside class=\"notice\">Only one relationship per user\/project is allowed and only one user can be <code>Owner<\/code>of a project.<\/aside>",
+                "operationId": "create",
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "required": [
+                                    "user_id",
+                                    "project_id",
+                                    "user_role_id"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "type": "string",
+                                        "format": "uuid"
+                                    },
+                                    "project_id": {
+                                        "type": "string",
+                                        "format": "uuid"
+                                    },
+                                    "user_role_id": {
+                                        "enum": [
+                                            "Owner",
+                                            "Administrator"
+                                        ],
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "The created UserHasProject",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/UserHasProjectResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/userHasProject\/{userId},{projectId}": {
+            "get": {
+                "tags": [
+                    "Manager:UserHasProject"
+                ],
+                "summary": "Get specified relationship between a user and a project",
+                "operationId": "get",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "User UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "projectId",
+                        "in": "path",
+                        "description": "Project UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Include"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A UserHasProject",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/UserHasProjectResponse"
+                                },
+                                "example": {
+                                    "$ref": "#\/components\/examples\/UserHasProjectShowExampleResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Manager:UserHasProject",
+                    "Resource:UserHasProject"
+                ],
+                "summary": "Update a specified relationship between a user and a project",
+                "description": "<aside class=\"notice\">Only one relationship per user\/project is allowed and only one user can be <code>Owner<\/code>of a project.<\/aside>",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "User UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "projectId",
+                        "in": "path",
+                        "description": "Project UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "required": [
+                                    "user_id",
+                                    "project_id",
+                                    "user_role_id"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "type": "string",
+                                        "format": "uuid"
+                                    },
+                                    "project_id": {
+                                        "type": "string",
+                                        "format": "uuid"
+                                    },
+                                    "user_role_id": {
+                                        "enum": [
+                                            "Owner",
+                                            "Administrator"
+                                        ],
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The updated UserHasProject",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/UserHasProjectResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Manager:UserHasProject",
+                    "Resource:UserHasProject"
+                ],
+                "summary": "Delete specified relationship between a user and a project",
+                "operationId": "delete",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "User UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "projectId",
+                        "in": "path",
+                        "description": "Project UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Empty response"
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Manager:UserHasProject",
+                    "Resource:UserHasProject"
+                ],
+                "summary": "Update a specified relationship between a user and a project",
+                "description": "<aside class=\"notice\">Only one relationship per user\/project is allowed and only one user can be <code>Owner<\/code>of a project.<\/aside>",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "User UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "projectId",
+                        "in": "path",
+                        "description": "Project UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "required": [
+                                    "user_id",
+                                    "project_id",
+                                    "user_role_id"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "type": "string",
+                                        "format": "uuid"
+                                    },
+                                    "project_id": {
+                                        "type": "string",
+                                        "format": "uuid"
+                                    },
+                                    "user_role_id": {
+                                        "enum": [
+                                            "Owner",
+                                            "Administrator"
+                                        ],
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The updated UserHasProject",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/UserHasProjectResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ErrorResponse": {
+                "required": [
+                    "message"
+                ],
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "description": "Error message"
+                    },
+                    "errors": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "description": "Field error"
+                            },
+                            "description": "Field errors"
+                        },
+                        "description": "Fields errors map"
+                    },
+                    "status_code": {
+                        "type": "integer",
+                        "description": "Error status code"
+                    },
+                    "debug": {
+                        "required": [
+                            "line",
+                            "file",
+                            "class",
+                            "trace"
+                        ],
+                        "properties": {
+                            "line": {
+                                "type": "integer",
+                                "description": "Code file line where error occurred"
+                            },
+                            "file": {
+                                "type": "string",
+                                "description": "Error file name"
+                            },
+                            "class": {
+                                "type": "string",
+                                "description": "Error class name"
+                            },
+                            "trace": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "description": "Error trace"
+                                },
+                                "description": "Error traces"
+                            }
+                        },
+                        "description": "Debug mode extra info"
+                    }
+                }
+            },
+            "Pagination": {
+                "required": [
+                    "total",
+                    "count",
+                    "per_page",
+                    "current_page",
+                    "total_pages",
+                    "links"
+                ],
+                "properties": {
+                    "total": {
+                        "minimum": 0,
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 434
+                    },
+                    "count": {
+                        "minimum": 0,
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 10
+                    },
+                    "per_page": {
+                        "minimum": 0,
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 10
+                    },
+                    "current_page": {
+                        "minimum": 0,
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 1
+                    },
+                    "total_pages": {
+                        "minimum": 0,
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 44
+                    },
+                    "links": {
+                        "properties": {
+                            "next": {
+                                "type": "string",
+                                "format": "url"
+                            },
+                            "previous": {
+                                "type": "string",
+                                "format": "url"
+                            }
+                        }
+                    }
+                }
+            },
+            "Meta": {
+                "properties": {
+                    "pagination": {
+                        "$ref": "#\/components\/schemas\/Pagination"
+                    }
+                }
+            },
+            "I18nLang": {
+                "required": [
+                    "id",
+                    "description"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                }
+            },
+            "I18nLangResponse": {
+                "required": [
+                    "data"
+                ],
+                "properties": {
+                    "data": {
+                        "$ref": "#\/components\/schemas\/I18nLang"
+                    }
+                }
+            },
+            "I18nLangListResponse": {
+                "required": [
+                    "data",
+                    "meta"
+                ],
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/I18nLang"
+                        }
+                    },
+                    "meta": {
+                        "$ref": "#\/components\/schemas\/Meta"
+                    }
+                }
+            },
+            "User": {
+                "required": [
+                    "id",
+                    "user_group_id",
+                    "name",
+                    "email",
+                    "preferred_language",
+                    "created_at",
+                    "updated_at"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "user_group_id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string",
+                        "format": "password"
+                    },
+                    "preferred_language": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "UserResponse": {
+                "required": [
+                    "data"
+                ],
+                "properties": {
+                    "data": {
+                        "$ref": "#\/components\/schemas\/User"
+                    }
+                }
+            },
+            "UserListResponse": {
+                "required": [
+                    "data",
+                    "meta"
+                ],
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/User"
+                        }
+                    },
+                    "meta": {
+                        "$ref": "#\/components\/schemas\/Meta"
+                    }
+                }
+            },
+            "UserGroup": {
+                "required": [
+                    "id",
+                    "users_count"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "users_count": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "UserGroupResponse": {
+                "required": [
+                    "data"
+                ],
+                "properties": {
+                    "data": {
+                        "$ref": "#\/components\/schemas\/UserGroup"
+                    }
+                }
+            },
+            "UserGroupListResponse": {
+                "required": [
+                    "data",
+                    "meta"
+                ],
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/UserGroup"
+                        }
+                    },
+                    "meta": {
+                        "$ref": "#\/components\/schemas\/Meta"
+                    }
+                }
+            },
+            "Notification": {
+                "required": [
+                    "id",
+                    "type",
+                    "notifiable_id",
+                    "notifiable_type",
+                    "data",
+                    "read_at",
+                    "created_at",
+                    "updated_at"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "notifiable_id": {
+                        "type": "string"
+                    },
+                    "notifiable_type": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "read_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "NotificationResponse": {
+                "required": [
+                    "data"
+                ],
+                "properties": {
+                    "data": {
+                        "$ref": "#\/components\/schemas\/Notification"
+                    }
+                }
+            },
+            "NotificationListResponse": {
+                "required": [
+                    "data",
+                    "meta"
+                ],
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/Notification"
+                        }
+                    },
+                    "meta": {
+                        "$ref": "#\/components\/schemas\/Meta"
+                    }
+                }
+            },
+            "NoContentResponse": {
+                "description": "No Content"
+            },
+            "Project": {
+                "required": [
+                    "id",
+                    "search_engine_id",
+                    "data_stream_id",
+                    "name",
+                    "created_at",
+                    "updated_at"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "search_engine_id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "data_stream_id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "ProjectResponse": {
+                "required": [
+                    "data"
+                ],
+                "properties": {
+                    "data": {
+                        "$ref": "#\/components\/schemas\/Project"
+                    }
+                }
+            },
+            "ProjectListResponse": {
+                "required": [
+                    "data",
+                    "meta"
+                ],
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/Project"
+                        }
+                    },
+                    "meta": {
+                        "$ref": "#\/components\/schemas\/Meta"
+                    }
+                },
+                "example": {
+                    "$ref": "#\/components\/examples\/ProjectIndexExampleResponse"
+                }
+            },
+            "UserHasProject": {
+                "required": [
+                    "user_id",
+                    "project_id",
+                    "user_role_id",
+                    "created_at",
+                    "updated_at"
+                ],
+                "properties": {
+                    "user_id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "project_id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "user_role_id": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "user": {
+                        "$ref": "#\/components\/schemas\/UserResponse"
+                    },
+                    "project": {
+                        "$ref": "#\/components\/schemas\/ProjectResponse"
+                    }
+                }
+            },
+            "UserHasProjectResponse": {
+                "required": [
+                    "data"
+                ],
+                "properties": {
+                    "data": {
+                        "$ref": "#\/components\/schemas\/UserHasProject"
+                    }
+                }
+            },
+            "UserHasProjectListResponse": {
+                "required": [
+                    "data",
+                    "meta"
+                ],
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/UserHasProject"
+                        }
+                    },
+                    "meta": {
+                        "$ref": "#\/components\/schemas\/Meta"
+                    }
+                }
+            }
+        },
+        "parameters": {
+            "Include": {
+                "name": "include",
+                "in": "query",
+                "description": "Include responses : {include1},{include2,{include3}[...]",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "Search": {
+                "name": "search",
+                "in": "query",
+                "description": "Search words",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "PaginationPage": {
+                "name": "page",
+                "in": "query",
+                "description": "Pagination : Page number",
+                "required": false,
+                "schema": {
+                    "minimum": 1,
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 1
+                }
+            },
+            "PaginationLimit": {
+                "name": "limit",
+                "in": "query",
+                "description": "Pagination : Maximum entries per page",
+                "required": false,
+                "schema": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 20
+                }
+            },
+            "OrderBy": {
+                "name": "order_by",
+                "in": "query",
+                "description": "Order by : {field},[asc|desc]",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            }
+        },
+        "examples": {
+            "MeIndexExampleResponse": {
+                "value": {
+                    "data": {
+                        "id": "41abdec2-1389-11e7-93ae-92361f002671",
+                        "user_group_id": "Developer",
+                        "name": "John Doe",
+                        "email": "john.doe@domain.tld",
+                        "preferred_language": "en",
+                        "created_at": "2018-04-13 12:51:54",
+                        "updated_at": "2018-04-13 12:51:54"
+                    }
+                }
+            },
+            "MeNotificationIndexExampleResponse": {
+                "value": {
+                    "data": [
+                        {
+                            "id": "13542ad4-e38c-4df0-b3fa-0a7ef6d2f022",
+                            "type": "App\\Notifications\\UserCreatedNotification",
+                            "notifiable_id": "41abdec2-1389-11e7-93ae-92361f002671",
+                            "notifiable_type": "App\\Models\\User",
+                            "data": {
+                                "user_id": "605c7610-1389-11e7-93ae-92361f002671",
+                                "user": {
+                                    "name": "John Smith",
+                                    "email": "john.smith@domain.tld",
+                                    "created_at": {
+                                        "date": "2018-04-13 12:51:54.000000",
+                                        "timezone_type": 3,
+                                        "timezone": "UTC"
+                                    }
+                                }
+                            },
+                            "read_at": null,
+                            "created_at": "2018-04-13 12:51:54",
+                            "updated_at": "2018-04-13 12:51:54"
+                        },
+                        {
+                            "id": "2c8c5237-d81d-4c13-8d72-9add4f6a3e0b",
+                            "type": "App\\Notifications\\UserCreatedNotification",
+                            "notifiable_id": "41abdec2-1389-11e7-93ae-92361f002671",
+                            "notifiable_type": "App\\Models\\User",
+                            "data": {
+                                "user_id": "82b5da82-138c-11e7-93ae-92361f002671",
+                                "user": {
+                                    "name": "Mickey Mouse",
+                                    "email": "mickey.mouse@domain.tld",
+                                    "created_at": {
+                                        "date": "2018-04-13 12:51:54.000000",
+                                        "timezone_type": 3,
+                                        "timezone": "UTC"
+                                    }
+                                }
+                            },
+                            "read_at": null,
+                            "created_at": "2018-04-13 12:51:54",
+                            "updated_at": "2018-04-13 12:51:54"
+                        },
+                        {
+                            "id": "31347562-7182-4c0e-9454-f2b7b4143fd7",
+                            "type": "App\\Notifications\\UserCreatedNotification",
+                            "notifiable_id": "41abdec2-1389-11e7-93ae-92361f002671",
+                            "notifiable_type": "App\\Models\\User",
+                            "data": {
+                                "user_id": "509dd5c0-1389-11e7-93ae-92361f002671",
+                                "user": {
+                                    "name": "Alan Smithee",
+                                    "email": "alan.smithee@domain.tld",
+                                    "created_at": {
+                                        "date": "2018-04-13 12:51:54.000000",
+                                        "timezone_type": 3,
+                                        "timezone": "UTC"
+                                    }
+                                }
+                            },
+                            "read_at": null,
+                            "created_at": "2018-04-13 12:51:54",
+                            "updated_at": "2018-04-13 12:51:54"
+                        },
+                        {
+                            "id": "afde11eb-ce52-42cd-b9a0-e0f7e757da83",
+                            "type": "App\\Notifications\\UserCreatedNotification",
+                            "notifiable_id": "41abdec2-1389-11e7-93ae-92361f002671",
+                            "notifiable_type": "App\\Models\\User",
+                            "data": {
+                                "user_id": "41abdec2-1389-11e7-93ae-92361f002671",
+                                "user": {
+                                    "name": "John Doe",
+                                    "email": "john.doe@domain.tld",
+                                    "created_at": {
+                                        "date": "2018-04-13 12:51:54.000000",
+                                        "timezone_type": 3,
+                                        "timezone": "UTC"
+                                    }
+                                }
+                            },
+                            "read_at": null,
+                            "created_at": "2018-04-13 12:51:54",
+                            "updated_at": "2018-04-13 12:51:54"
+                        }
+                    ],
+                    "meta": {
+                        "pagination": {
+                            "total": 4,
+                            "count": 4,
+                            "per_page": 10,
+                            "current_page": 1,
+                            "total_pages": 1,
+                            "links": []
+                        }
+                    }
+                }
+            },
+            "UserGroupIndexExampleResponse": {
+                "value": {
+                    "data": [
+                        {
+                            "id": "Developer",
+                            "users_count": 1
+                        },
+                        {
+                            "id": "End-User",
+                            "users_count": 2
+                        },
+                        {
+                            "id": "Support",
+                            "users_count": 1
+                        }
+                    ],
+                    "meta": {
+                        "pagination": {
+                            "total": 3,
+                            "count": 3,
+                            "per_page": 10,
+                            "current_page": 1,
+                            "total_pages": 1,
+                            "links": []
+                        }
+                    }
+                }
+            },
+            "UserIndexExampleResponse": {
+                "value": {
+                    "data": [
+                        {
+                            "id": "41abdec2-1389-11e7-93ae-92361f002671",
+                            "user_group_id": "Developer",
+                            "name": "John Doe",
+                            "email": "john.doe@domain.tld",
+                            "preferred_language": "en",
+                            "created_at": "2018-04-13 12:51:54",
+                            "updated_at": "2018-04-13 12:51:54"
+                        },
+                        {
+                            "id": "509dd5c0-1389-11e7-93ae-92361f002671",
+                            "user_group_id": "Support",
+                            "name": "Alan Smithee",
+                            "email": "alan.smithee@domain.tld",
+                            "preferred_language": "fr",
+                            "created_at": "2018-04-13 12:51:54",
+                            "updated_at": "2018-04-13 12:51:54"
+                        },
+                        {
+                            "id": "605c7610-1389-11e7-93ae-92361f002671",
+                            "user_group_id": "End-User",
+                            "name": "John Smith",
+                            "email": "john.smith@domain.tld",
+                            "preferred_language": "en",
+                            "created_at": "2018-04-13 12:51:54",
+                            "updated_at": "2018-04-13 12:51:54"
+                        },
+                        {
+                            "id": "82b5da82-138c-11e7-93ae-92361f002671",
+                            "user_group_id": "End-User",
+                            "name": "Mickey Mouse",
+                            "email": "mickey.mouse@domain.tld",
+                            "preferred_language": "fr",
+                            "created_at": "2018-04-13 12:51:54",
+                            "updated_at": "2018-04-13 12:51:54"
+                        }
+                    ],
+                    "meta": {
+                        "pagination": {
+                            "total": 4,
+                            "count": 4,
+                            "per_page": 10,
+                            "current_page": 1,
+                            "total_pages": 1,
+                            "links": []
+                        }
+                    }
+                }
+            },
+            "I18nLangIndexExampleResponse": {
+                "value": {
+                    "data": [
+                        {
+                            "id": "af",
+                            "description": "Afrikaans"
+                        },
+                        {
+                            "id": "af_NA",
+                            "description": "Afrikaans (Namibia)"
+                        },
+                        {
+                            "id": "af_ZA",
+                            "description": "Afrikaans (South Africa)"
+                        },
+                        {
+                            "id": "ak",
+                            "description": "Akan"
+                        },
+                        {
+                            "id": "ak_GH",
+                            "description": "Akan (Ghana)"
+                        },
+                        {
+                            "id": "am",
+                            "description": "Amharic"
+                        },
+                        {
+                            "id": "am_ET",
+                            "description": "Amharic (Ethiopia)"
+                        },
+                        {
+                            "id": "ar",
+                            "description": "Arabic"
+                        },
+                        {
+                            "id": "ar_AE",
+                            "description": "Arabic (United Arab Emirates)"
+                        },
+                        {
+                            "id": "ar_BH",
+                            "description": "Arabic (Bahrain)"
+                        }
+                    ],
+                    "meta": {
+                        "pagination": {
+                            "total": 434,
+                            "count": 10,
+                            "per_page": 10,
+                            "current_page": 1,
+                            "total_pages": 44,
+                            "links": {
+                                "next": "https:\/\/ems-shield.ryan.ems-dev.net\/api\/i18nLang?page=2"
+                            }
+                        }
+                    }
+                }
+            },
+            "ProjectIndexExampleResponse": {
+                "value": {
+                    "data": [
+                        {
+                            "id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
+                            "name": "Sample Project",
+                            "created_at": "2018-04-13 12:51:54",
+                            "updated_at": "2018-04-13 12:51:54"
+                        }
+                    ],
+                    "meta": {
+                        "pagination": {
+                            "total": 1,
+                            "count": 1,
+                            "per_page": 20,
+                            "current_page": 1,
+                            "total_pages": 1,
+                            "links": []
+                        }
+                    }
+                }
+            },
+            "UserHasProjectIndexExampleResponse": {
+                "value": {
+                    "data": [
+                        {
+                            "user_id": "605c7610-1389-11e7-93ae-92361f002671",
+                            "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
+                            "user_role_id": "Owner",
+                            "created_at": "2018-04-13 12:51:54",
+                            "updated_at": "2018-04-13 12:51:54"
+                        },
+                        {
+                            "user_id": "82b5da82-138c-11e7-93ae-92361f002671",
+                            "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
+                            "user_role_id": "Administrator",
+                            "created_at": "2018-04-13 12:51:54",
+                            "updated_at": "2018-04-13 12:51:54"
+                        }
+                    ],
+                    "meta": {
+                        "pagination": {
+                            "total": 2,
+                            "count": 2,
+                            "per_page": 20,
+                            "current_page": 1,
+                            "total_pages": 1,
+                            "links": []
+                        }
+                    }
+                }
+            },
+            "UserHasProjectShowExampleResponse": {
+                "value": {
+                    "data": []
+                }
+            }
+        },
+        "securitySchemes": {
+            "apiBearer": {
+                "type": "http",
+                "scheme": "bearer"
+            },
+            "apiOAuth": {
+                "type": "oauth2",
+                "flows": {
+                    "implicit": {
+                        "authorizationUrl": "\/oauth\/authorize",
+                        "scopes": {
+                            "*": "Access to anything"
+                        }
+                    },
+                    "authorizationCode": {
+                        "authorizationUrl": "\/oauth\/authorize",
+                        "tokenUrl": "\/oauth\/token",
+                        "refreshUrl": "\/oauth\/token\/refresh",
+                        "scopes": {
+                            "*": "Access to anything"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "security": [
+        {
+            "apiBearer": [
+                "*"
+            ]
+        },
+        {
+            "apiOAuth": [
+                "*"
+            ]
+        }
+    ]
+}
