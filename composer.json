@@ -1,0 +1,36 @@
+{
+	"name": "ems-shield/ems-shield-php-client",
+	"description": "ems-shield api php client",
+	"type": "library",
+	"license": "MIT",
+	"keywords": [
+		"ems-shield",
+		"PHP",
+		"SDK"
+	],
+	"homepage": "https://github.com/ems-shield/ems-shield-php-client",
+	"authors": [
+		{
+			"name": "Ryan Gilles",
+			"email": "ryan@e-monsite.com"
+		}
+    	],
+	"minimum-stability": "dev",
+	"autoload": {
+		"psr-4": {
+			"EmsShield\\Api\\": "generated/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"EmsShield\\Api\\Tests\\": "tests/generated/"
+		}
+	},
+	"require-dev": {
+		"rygilles/openapi-php-client-generator": "@dev",
+		"phpunit/phpunit": "^6.3"
+	},
+	"require": {
+		"guzzlehttp/guzzle": "^6.3"
+	}
+}
