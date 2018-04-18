@@ -14,6 +14,7 @@ use EmsShield\Api\Managers\UserManager;
 use EmsShield\Api\Managers\I18nLangManager;
 use EmsShield\Api\Managers\ProjectManager;
 use EmsShield\Api\Managers\UserHasProjectManager;
+use EmsShield\Api\Managers\IpStatusManager;
 
 /**
  * ems-shield client class (version 1.0)
@@ -100,6 +101,13 @@ class ApiClient
 	protected $userHasProjectManager;
 
 	/**
+	 * IpStatus manager
+	 *
+	 * @var IpStatusManager
+	 */
+	protected $ipStatusManager;
+
+	/**
 	 * API Client class constructor
 	 *
 	 * @param string $bearerToken Bearer authentication access token
@@ -141,6 +149,7 @@ class ApiClient
 		$this->i18nLangManager = new I18nLangManager($this);
 		$this->projectManager = new ProjectManager($this);
 		$this->userHasProjectManager = new UserHasProjectManager($this);
+		$this->ipStatusManager = new IpStatusManager($this);
 	}
 
 	/**
@@ -241,5 +250,15 @@ class ApiClient
 	public function UserHasProjectManager()
 	{
 		return $this->userHasProjectManager;
+	}
+	
+	/**
+	 * Return the IpStatus manager
+	 *
+	 * @return IpStatusManager
+	 */
+	public function IpStatusManager()
+	{
+		return $this->ipStatusManager;
 	}
 }

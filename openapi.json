@@ -2000,6 +2000,261 @@
                     }
                 }
             }
+        },
+        "\/api\/ipStatus": {
+            "get": {
+                "tags": [
+                    "Manager:IpStatus"
+                ],
+                "summary": "Show ip status list",
+                "operationId": "all",
+                "parameters": [
+                    {
+                        "$ref": "#\/components\/parameters\/Include"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Search"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationPage"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationLimit"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/OrderBy"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A IpStatus list",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/IpStatusListResponse"
+                                },
+                                "example": {
+                                    "$ref": "#\/components\/examples\/IpStatusIndexExampleResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Manager:IpStatus"
+                ],
+                "summary": "Create and store a new ip status",
+                "operationId": "create",
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "maxLength": 30,
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "The created IpStatus",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/IpStatusResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/ipStatus\/{ipStatusId}": {
+            "get": {
+                "tags": [
+                    "Manager:IpStatus"
+                ],
+                "summary": "Get specified ip status",
+                "operationId": "get",
+                "parameters": [
+                    {
+                        "name": "ipStatusId",
+                        "in": "path",
+                        "description": "Ip Status ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A IpStatus",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/IpStatusResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Manager:IpStatus",
+                    "Resource:IpStatus"
+                ],
+                "summary": "Update a specified ip status",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "ipStatusId",
+                        "in": "path",
+                        "description": "Ip Status ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The updated IpStatus",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/IpStatusResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Manager:IpStatus",
+                    "Resource:IpStatus"
+                ],
+                "summary": "Delete specified ip status",
+                "operationId": "delete",
+                "parameters": [
+                    {
+                        "name": "ipStatusId",
+                        "in": "path",
+                        "description": "Ip Status ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Empty response"
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Manager:IpStatus",
+                    "Resource:IpStatus"
+                ],
+                "summary": "Update a specified ip status",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "ipStatusId",
+                        "in": "path",
+                        "description": "Ip Status ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The updated IpStatus",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/IpStatusResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -2476,6 +2731,43 @@
                         "$ref": "#\/components\/schemas\/Meta"
                     }
                 }
+            },
+            "IpStatus": {
+                "required": [
+                    "id"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    }
+                }
+            },
+            "IpStatusResponse": {
+                "required": [
+                    "data"
+                ],
+                "properties": {
+                    "data": {
+                        "$ref": "#\/components\/schemas\/IpStatus"
+                    }
+                }
+            },
+            "IpStatusListResponse": {
+                "required": [
+                    "data",
+                    "meta"
+                ],
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/IpStatus"
+                        }
+                    },
+                    "meta": {
+                        "$ref": "#\/components\/schemas\/Meta"
+                    }
+                }
             }
         },
         "parameters": {
@@ -2539,8 +2831,8 @@
                         "name": "John Doe",
                         "email": "john.doe@domain.tld",
                         "preferred_language": "en",
-                        "created_at": "2018-04-13 12:51:54",
-                        "updated_at": "2018-04-13 12:51:54"
+                        "created_at": "2018-04-18 11:17:48",
+                        "updated_at": "2018-04-18 11:17:48"
                     }
                 }
             },
@@ -2548,28 +2840,7 @@
                 "value": {
                     "data": [
                         {
-                            "id": "13542ad4-e38c-4df0-b3fa-0a7ef6d2f022",
-                            "type": "App\\Notifications\\UserCreatedNotification",
-                            "notifiable_id": "41abdec2-1389-11e7-93ae-92361f002671",
-                            "notifiable_type": "App\\Models\\User",
-                            "data": {
-                                "user_id": "605c7610-1389-11e7-93ae-92361f002671",
-                                "user": {
-                                    "name": "John Smith",
-                                    "email": "john.smith@domain.tld",
-                                    "created_at": {
-                                        "date": "2018-04-13 12:51:54.000000",
-                                        "timezone_type": 3,
-                                        "timezone": "UTC"
-                                    }
-                                }
-                            },
-                            "read_at": null,
-                            "created_at": "2018-04-13 12:51:54",
-                            "updated_at": "2018-04-13 12:51:54"
-                        },
-                        {
-                            "id": "2c8c5237-d81d-4c13-8d72-9add4f6a3e0b",
+                            "id": "16f40fcc-f03e-4cb8-a4af-e9270eb37ea8",
                             "type": "App\\Notifications\\UserCreatedNotification",
                             "notifiable_id": "41abdec2-1389-11e7-93ae-92361f002671",
                             "notifiable_type": "App\\Models\\User",
@@ -2579,39 +2850,18 @@
                                     "name": "Mickey Mouse",
                                     "email": "mickey.mouse@domain.tld",
                                     "created_at": {
-                                        "date": "2018-04-13 12:51:54.000000",
+                                        "date": "2018-04-18 11:17:49.000000",
                                         "timezone_type": 3,
                                         "timezone": "UTC"
                                     }
                                 }
                             },
                             "read_at": null,
-                            "created_at": "2018-04-13 12:51:54",
-                            "updated_at": "2018-04-13 12:51:54"
+                            "created_at": "2018-04-18 11:17:49",
+                            "updated_at": "2018-04-18 11:17:49"
                         },
                         {
-                            "id": "31347562-7182-4c0e-9454-f2b7b4143fd7",
-                            "type": "App\\Notifications\\UserCreatedNotification",
-                            "notifiable_id": "41abdec2-1389-11e7-93ae-92361f002671",
-                            "notifiable_type": "App\\Models\\User",
-                            "data": {
-                                "user_id": "509dd5c0-1389-11e7-93ae-92361f002671",
-                                "user": {
-                                    "name": "Alan Smithee",
-                                    "email": "alan.smithee@domain.tld",
-                                    "created_at": {
-                                        "date": "2018-04-13 12:51:54.000000",
-                                        "timezone_type": 3,
-                                        "timezone": "UTC"
-                                    }
-                                }
-                            },
-                            "read_at": null,
-                            "created_at": "2018-04-13 12:51:54",
-                            "updated_at": "2018-04-13 12:51:54"
-                        },
-                        {
-                            "id": "afde11eb-ce52-42cd-b9a0-e0f7e757da83",
+                            "id": "38090127-0b98-441b-9cf2-34e1ccab0079",
                             "type": "App\\Notifications\\UserCreatedNotification",
                             "notifiable_id": "41abdec2-1389-11e7-93ae-92361f002671",
                             "notifiable_type": "App\\Models\\User",
@@ -2621,15 +2871,57 @@
                                     "name": "John Doe",
                                     "email": "john.doe@domain.tld",
                                     "created_at": {
-                                        "date": "2018-04-13 12:51:54.000000",
+                                        "date": "2018-04-18 11:17:48.000000",
                                         "timezone_type": 3,
                                         "timezone": "UTC"
                                     }
                                 }
                             },
                             "read_at": null,
-                            "created_at": "2018-04-13 12:51:54",
-                            "updated_at": "2018-04-13 12:51:54"
+                            "created_at": "2018-04-18 11:17:48",
+                            "updated_at": "2018-04-18 11:17:48"
+                        },
+                        {
+                            "id": "94216fb7-2436-4fdf-846d-e90548785a90",
+                            "type": "App\\Notifications\\UserCreatedNotification",
+                            "notifiable_id": "41abdec2-1389-11e7-93ae-92361f002671",
+                            "notifiable_type": "App\\Models\\User",
+                            "data": {
+                                "user_id": "509dd5c0-1389-11e7-93ae-92361f002671",
+                                "user": {
+                                    "name": "Alan Smithee",
+                                    "email": "alan.smithee@domain.tld",
+                                    "created_at": {
+                                        "date": "2018-04-18 11:17:48.000000",
+                                        "timezone_type": 3,
+                                        "timezone": "UTC"
+                                    }
+                                }
+                            },
+                            "read_at": null,
+                            "created_at": "2018-04-18 11:17:48",
+                            "updated_at": "2018-04-18 11:17:48"
+                        },
+                        {
+                            "id": "bd0d5019-b682-49b8-b75e-4b1e352be376",
+                            "type": "App\\Notifications\\UserCreatedNotification",
+                            "notifiable_id": "41abdec2-1389-11e7-93ae-92361f002671",
+                            "notifiable_type": "App\\Models\\User",
+                            "data": {
+                                "user_id": "605c7610-1389-11e7-93ae-92361f002671",
+                                "user": {
+                                    "name": "John Smith",
+                                    "email": "john.smith@domain.tld",
+                                    "created_at": {
+                                        "date": "2018-04-18 11:17:48.000000",
+                                        "timezone_type": 3,
+                                        "timezone": "UTC"
+                                    }
+                                }
+                            },
+                            "read_at": null,
+                            "created_at": "2018-04-18 11:17:48",
+                            "updated_at": "2018-04-18 11:17:48"
                         }
                     ],
                     "meta": {
@@ -2696,8 +2988,8 @@
                             "name": "John Doe",
                             "email": "john.doe@domain.tld",
                             "preferred_language": "en",
-                            "created_at": "2018-04-13 12:51:54",
-                            "updated_at": "2018-04-13 12:51:54"
+                            "created_at": "2018-04-18 11:17:48",
+                            "updated_at": "2018-04-18 11:17:48"
                         },
                         {
                             "id": "509dd5c0-1389-11e7-93ae-92361f002671",
@@ -2705,8 +2997,8 @@
                             "name": "Alan Smithee",
                             "email": "alan.smithee@domain.tld",
                             "preferred_language": "fr",
-                            "created_at": "2018-04-13 12:51:54",
-                            "updated_at": "2018-04-13 14:27:10"
+                            "created_at": "2018-04-18 11:17:48",
+                            "updated_at": "2018-04-18 11:17:48"
                         },
                         {
                             "id": "605c7610-1389-11e7-93ae-92361f002671",
@@ -2714,8 +3006,8 @@
                             "name": "John Smith",
                             "email": "john.smith@domain.tld",
                             "preferred_language": "en",
-                            "created_at": "2018-04-13 12:51:54",
-                            "updated_at": "2018-04-13 12:51:54"
+                            "created_at": "2018-04-18 11:17:48",
+                            "updated_at": "2018-04-18 11:17:48"
                         },
                         {
                             "id": "82b5da82-138c-11e7-93ae-92361f002671",
@@ -2723,8 +3015,8 @@
                             "name": "Mickey Mouse",
                             "email": "mickey.mouse@domain.tld",
                             "preferred_language": "fr",
-                            "created_at": "2018-04-13 12:51:54",
-                            "updated_at": "2018-04-13 12:51:54"
+                            "created_at": "2018-04-18 11:17:49",
+                            "updated_at": "2018-04-18 11:17:49"
                         }
                     ],
                     "meta": {
@@ -2803,8 +3095,8 @@
                         {
                             "id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "name": "Sample Project",
-                            "created_at": "2018-04-13 12:51:54",
-                            "updated_at": "2018-04-13 14:25:07"
+                            "created_at": "2018-04-18 11:17:49",
+                            "updated_at": "2018-04-18 11:17:49"
                         }
                     ],
                     "meta": {
@@ -2826,15 +3118,15 @@
                             "user_id": "605c7610-1389-11e7-93ae-92361f002671",
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "user_role_id": "Owner",
-                            "created_at": "2018-04-13 12:51:54",
-                            "updated_at": "2018-04-13 12:51:54"
+                            "created_at": "2018-04-18 11:17:49",
+                            "updated_at": "2018-04-18 11:17:49"
                         },
                         {
                             "user_id": "82b5da82-138c-11e7-93ae-92361f002671",
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "user_role_id": "Administrator",
-                            "created_at": "2018-04-13 12:51:54",
-                            "updated_at": "2018-04-13 12:51:54"
+                            "created_at": "2018-04-18 11:17:49",
+                            "updated_at": "2018-04-18 11:17:49"
                         }
                     ],
                     "meta": {
@@ -2852,6 +3144,31 @@
             "UserHasProjectShowExampleResponse": {
                 "value": {
                     "data": []
+                }
+            },
+            "IpStatusIndexExampleResponse": {
+                "value": {
+                    "data": [
+                        {
+                            "id": "Blocked"
+                        },
+                        {
+                            "id": "None"
+                        },
+                        {
+                            "id": "Whitelisted"
+                        }
+                    ],
+                    "meta": {
+                        "pagination": {
+                            "total": 3,
+                            "count": 3,
+                            "per_page": 20,
+                            "current_page": 1,
+                            "total_pages": 1,
+                            "links": []
+                        }
+                    }
                 }
             }
         },
