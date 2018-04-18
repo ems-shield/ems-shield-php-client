@@ -223,6 +223,70 @@
                 }
             }
         },
+        "\/api\/me\/project": {
+            "get": {
+                "tags": [
+                    "Manager:Me"
+                ],
+                "summary": "Current user project list",
+                "description": "You can specify a GET parameter `user_role_id` to filter results.",
+                "operationId": "getProjects",
+                "parameters": [
+                    {
+                        "name": "user_role_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "enum": [
+                                "Owner",
+                                "Administrator"
+                            ],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Include"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Search"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationPage"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationLimit"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/OrderBy"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A Project list",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ProjectListResponse"
+                                },
+                                "example": {
+                                    "$ref": "#\/components\/examples\/MeProjectIndexExampleResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "\/api\/userGroup": {
             "get": {
                 "tags": [
@@ -2580,6 +2644,21 @@
                     }
                 }
             },
+            "MeProjectIndexExampleResponse": {
+                "value": {
+                    "data": [],
+                    "meta": {
+                        "pagination": {
+                            "total": 0,
+                            "count": 0,
+                            "per_page": 20,
+                            "current_page": 1,
+                            "total_pages": 1,
+                            "links": []
+                        }
+                    }
+                }
+            },
             "UserGroupIndexExampleResponse": {
                 "value": {
                     "data": [
@@ -2627,7 +2706,7 @@
                             "email": "alan.smithee@domain.tld",
                             "preferred_language": "fr",
                             "created_at": "2018-04-13 12:51:54",
-                            "updated_at": "2018-04-13 12:51:54"
+                            "updated_at": "2018-04-13 14:27:10"
                         },
                         {
                             "id": "605c7610-1389-11e7-93ae-92361f002671",
@@ -2725,7 +2804,7 @@
                             "id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "name": "Sample Project",
                             "created_at": "2018-04-13 12:51:54",
-                            "updated_at": "2018-04-13 12:51:54"
+                            "updated_at": "2018-04-13 14:25:07"
                         }
                     ],
                     "meta": {

@@ -17,4 +17,9 @@ class MeManagerTest extends TestCase
 	{
 		// @todo
 	}
+	
+	public function getProjectsTest()
+	{
+		// @todo
+	}
 }
