@@ -15,6 +15,9 @@ use EmsShield\Api\Managers\I18nLangManager;
 use EmsShield\Api\Managers\ProjectManager;
 use EmsShield\Api\Managers\UserHasProjectManager;
 use EmsShield\Api\Managers\IpStatusManager;
+use EmsShield\Api\Managers\IpStatusVersionManager;
+use EmsShield\Api\Managers\IpManager;
+use EmsShield\Api\Managers\IpLogManager;
 
 /**
  * ems-shield client class (version 1.0)
@@ -108,6 +111,27 @@ class ApiClient
 	protected $ipStatusManager;
 
 	/**
+	 * IpStatusVersion manager
+	 *
+	 * @var IpStatusVersionManager
+	 */
+	protected $ipStatusVersionManager;
+
+	/**
+	 * Ip manager
+	 *
+	 * @var IpManager
+	 */
+	protected $ipManager;
+
+	/**
+	 * IpLog manager
+	 *
+	 * @var IpLogManager
+	 */
+	protected $ipLogManager;
+
+	/**
 	 * API Client class constructor
 	 *
 	 * @param string $bearerToken Bearer authentication access token
@@ -150,6 +174,9 @@ class ApiClient
 		$this->projectManager = new ProjectManager($this);
 		$this->userHasProjectManager = new UserHasProjectManager($this);
 		$this->ipStatusManager = new IpStatusManager($this);
+		$this->ipStatusVersionManager = new IpStatusVersionManager($this);
+		$this->ipManager = new IpManager($this);
+		$this->ipLogManager = new IpLogManager($this);
 	}
 
 	/**
@@ -260,5 +287,35 @@ class ApiClient
 	public function IpStatusManager()
 	{
 		return $this->ipStatusManager;
+	}
+	
+	/**
+	 * Return the IpStatusVersion manager
+	 *
+	 * @return IpStatusVersionManager
+	 */
+	public function IpStatusVersionManager()
+	{
+		return $this->ipStatusVersionManager;
+	}
+	
+	/**
+	 * Return the Ip manager
+	 *
+	 * @return IpManager
+	 */
+	public function IpManager()
+	{
+		return $this->ipManager;
+	}
+	
+	/**
+	 * Return the IpLog manager
+	 *
+	 * @return IpLogManager
+	 */
+	public function IpLogManager()
+	{
+		return $this->ipLogManager;
 	}
 }
