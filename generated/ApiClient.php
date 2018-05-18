@@ -18,6 +18,8 @@ use EmsShield\Api\Managers\IpStatusManager;
 use EmsShield\Api\Managers\IpStatusVersionManager;
 use EmsShield\Api\Managers\IpManager;
 use EmsShield\Api\Managers\IpLogManager;
+use EmsShield\Api\Managers\ProjectTagManager;
+use EmsShield\Api\Managers\ProjectTaggableManager;
 
 /**
  * ems-shield client class (version 1.0)
@@ -132,6 +134,20 @@ class ApiClient
 	protected $ipLogManager;
 
 	/**
+	 * ProjectTag manager
+	 *
+	 * @var ProjectTagManager
+	 */
+	protected $projectTagManager;
+
+	/**
+	 * ProjectTaggable manager
+	 *
+	 * @var ProjectTaggableManager
+	 */
+	protected $projectTaggableManager;
+
+	/**
 	 * API Client class constructor
 	 *
 	 * @param string $bearerToken Bearer authentication access token
@@ -177,6 +193,8 @@ class ApiClient
 		$this->ipStatusVersionManager = new IpStatusVersionManager($this);
 		$this->ipManager = new IpManager($this);
 		$this->ipLogManager = new IpLogManager($this);
+		$this->projectTagManager = new ProjectTagManager($this);
+		$this->projectTaggableManager = new ProjectTaggableManager($this);
 	}
 
 	/**
@@ -317,5 +335,25 @@ class ApiClient
 	public function IpLogManager()
 	{
 		return $this->ipLogManager;
+	}
+	
+	/**
+	 * Return the ProjectTag manager
+	 *
+	 * @return ProjectTagManager
+	 */
+	public function ProjectTagManager()
+	{
+		return $this->projectTagManager;
+	}
+	
+	/**
+	 * Return the ProjectTaggable manager
+	 *
+	 * @return ProjectTaggableManager
+	 */
+	public function ProjectTaggableManager()
+	{
+		return $this->projectTaggableManager;
 	}
 }

@@ -4,19 +4,19 @@ namespace EmsShield\Api\Managers;
 
 use EmsShield\Api\ApiClient;
 use EmsShield\Api\Exceptions\UnexpectedResponseException;
-use EmsShield\Api\Resources\IpListResponse;
+use EmsShield\Api\Resources\ProjectTagListResponse;
 use EmsShield\Api\Resources\ErrorResponse;
-use EmsShield\Api\Resources\IpResponse;
-use EmsShield\Api\Resources\Ip;
+use EmsShield\Api\Resources\ProjectTagResponse;
+use EmsShield\Api\Resources\ProjectTag;
 use EmsShield\Api\Resources\Meta;
 use EmsShield\Api\Resources\Pagination;
 
 /**
- * Ip manager class
+ * ProjectTag manager class
  * 
  * @package EmsShield\Api\Managers
  */
-class IpManager 
+class ProjectTagManager 
 {
 	/**
 	 * API client
@@ -26,7 +26,7 @@ class IpManager
 	protected $apiClient;
 
 	/**
-	 * Ip manager class constructor
+	 * ProjectTag manager class constructor
 	 *
 	 * @param ApiClient $apiClient API Client to use for this manager requests
 	 */
@@ -46,32 +46,25 @@ class IpManager
 	}
 
 	/**
-	 * Show ip list
-	 * 
-	 * You can specify a GET parameter `ip_version` to filter results.
+	 * Show project tag list
 	 * 
 	 * Excepted HTTP code : 200
 	 * 
-	 * @param string $ip_version
 	 * @param string $include Include responses : {include1},{include2,{include3}[...]
 	 * @param string $search Search words
 	 * @param int $page Format: int32. Pagination : Page number
 	 * @param int $limit Format: int32. Pagination : Maximum entries per page
 	 * @param string $order_by Order by : {field},[asc|desc]
 	 * 
-	 * @return IpListResponse
+	 * @return ProjectTagListResponse
 	 * 
 	 * @throws UnexpectedResponseException
 	 */
-	public function all($ip_version = null, $include = null, $search = null, $page = null, $limit = null, $order_by = null)
+	public function all($include = null, $search = null, $page = null, $limit = null, $order_by = null)
 	{
-		$routeUrl = '/api/ip';
+		$routeUrl = '/api/projectTag';
 
 		$queryParameters = [];
-
-		if (!is_null($ip_version)) {
-			$queryParameters['ip_version'] = $ip_version;
-		}
 
 		if (!is_null($include)) {
 			$queryParameters['include'] = $include;
@@ -114,15 +107,14 @@ class IpManager
 
 		$requestBody = json_decode((string) $request->getBody(), true);
 
-		$response = new IpListResponse(
+		$response = new ProjectTagListResponse(
 			$this->apiClient, 
 			array_map(function($data) {
-				return new Ip(
+				return new ProjectTag(
 					$this->apiClient, 
 					$data['project_id'], 
-					$data['ip'], 
-					$data['ip_status_id'], 
-					$data['v6'], 
+					$data['name'], 
+					(isset($data['ip_status_id']) ? $data['ip_status_id'] : null), 
 					$data['created_at'], 
 					$data['updated_at']
 				); 
@@ -145,38 +137,24 @@ class IpManager
 	}
 	
 	/**
-	 * Create and store a new ip
+	 * Create and store a new project tag
 	 * 
 	 * Excepted HTTP code : 201
 	 * 
 	 * @param string $project_id Format: uuid.
-	 * @param string $ip
-	 * @param string $ip_status_id
-	 * @param boolean $v6
-	 * @param string $log_entry
-	 * @param mixed $tags
+	 * @param string $name
 	 * 
-	 * @return IpResponse
+	 * @return ProjectTagResponse
 	 * 
 	 * @throws UnexpectedResponseException
 	 */
-	public function create($project_id, $ip, $ip_status_id, $v6, $log_entry = null, $tags = null)
+	public function create($project_id, $name)
 	{
-		$routeUrl = '/api/ip';
+		$routeUrl = '/api/projectTag';
 
 		$bodyParameters = [];
 		$bodyParameters['project_id'] = $project_id;
-		$bodyParameters['ip'] = $ip;
-		$bodyParameters['ip_status_id'] = $ip_status_id;
-		$bodyParameters['v6'] = $v6;
-
-		if (!is_null($log_entry)) {
-			$bodyParameters['log_entry'] = $log_entry;
-		}
-
-		if (!is_null($tags)) {
-			$bodyParameters['tags'] = $tags;
-		}
+		$bodyParameters['name'] = $name;
 
 		$requestOptions = [];
 		$requestOptions['form_params'] = $bodyParameters;
@@ -199,14 +177,13 @@ class IpManager
 
 		$requestBody = json_decode((string) $request->getBody(), true);
 
-		$response = new IpResponse(
+		$response = new ProjectTagResponse(
 			$this->apiClient, 
-			new Ip(
+			new ProjectTag(
 				$this->apiClient, 
 				$requestBody['data']['project_id'], 
-				$requestBody['data']['ip'], 
-				$requestBody['data']['ip_status_id'], 
-				$requestBody['data']['v6'], 
+				$requestBody['data']['name'], 
+				(isset($requestBody['data']['ip_status_id']) ? $requestBody['data']['ip_status_id'] : null), 
 				$requestBody['data']['created_at'], 
 				$requestBody['data']['updated_at']
 			)
@@ -216,24 +193,24 @@ class IpManager
 	}
 	
 	/**
-	 * Get specified ip
+	 * Get specified project tag
 	 * 
 	 * Excepted HTTP code : 200
 	 * 
 	 * @param string $projectId Project ID
-	 * @param string $ip Ip
+	 * @param string $name Name
 	 * 
-	 * @return IpResponse
+	 * @return ProjectTagResponse
 	 * 
 	 * @throws UnexpectedResponseException
 	 */
-	public function get($projectId, $ip)
+	public function get($projectId, $name)
 	{
-		$routePath = '/api/ip/{projectId},{ip}';
+		$routePath = '/api/projectTag/{projectId},{projectTagName}';
 
 		$pathReplacements = [
 			'{projectId}' => $projectId,
-			'{ip}' => $ip,
+			'{name}' => $name,
 		];
 
 		$routeUrl = str_replace(array_keys($pathReplacements), array_values($pathReplacements), $routePath);
@@ -258,14 +235,13 @@ class IpManager
 
 		$requestBody = json_decode((string) $request->getBody(), true);
 
-		$response = new IpResponse(
+		$response = new ProjectTagResponse(
 			$this->apiClient, 
-			new Ip(
+			new ProjectTag(
 				$this->apiClient, 
 				$requestBody['data']['project_id'], 
-				$requestBody['data']['ip'], 
-				$requestBody['data']['ip_status_id'], 
-				$requestBody['data']['v6'], 
+				$requestBody['data']['name'], 
+				(isset($requestBody['data']['ip_status_id']) ? $requestBody['data']['ip_status_id'] : null), 
 				$requestBody['data']['created_at'], 
 				$requestBody['data']['updated_at']
 			)
@@ -275,29 +251,26 @@ class IpManager
 	}
 	
 	/**
-	 * Update a specified ip
+	 * Update a specified project tag
 	 * 
 	 * Excepted HTTP code : 200
 	 * 
 	 * @param string $projectId Project ID
-	 * @param string $ip
+	 * @param string $name Name
 	 * @param string $project_id Format: uuid.
-	 * @param string $ip_status_id
-	 * @param boolean $v6
-	 * @param string $log_entry
-	 * @param mixed $tags
+	 * @param string $ip
 	 * 
-	 * @return IpResponse
+	 * @return ProjectTagResponse
 	 * 
 	 * @throws UnexpectedResponseException
 	 */
-	public function update($projectId, $ip, $project_id, $ip_status_id, $v6, $log_entry = null, $tags = null)
+	public function update($projectId, $name, $project_id, $ip)
 	{
-		$routePath = '/api/ip/{projectId},{ip}';
+		$routePath = '/api/projectTag/{projectId},{projectTagName}';
 
 		$pathReplacements = [
 			'{projectId}' => $projectId,
-			'{ip}' => $ip,
+			'{name}' => $name,
 		];
 
 		$routeUrl = str_replace(array_keys($pathReplacements), array_values($pathReplacements), $routePath);
@@ -305,16 +278,6 @@ class IpManager
 		$bodyParameters = [];
 		$bodyParameters['project_id'] = $project_id;
 		$bodyParameters['ip'] = $ip;
-		$bodyParameters['ip_status_id'] = $ip_status_id;
-		$bodyParameters['v6'] = $v6;
-
-		if (!is_null($log_entry)) {
-			$bodyParameters['log_entry'] = $log_entry;
-		}
-
-		if (!is_null($tags)) {
-			$bodyParameters['tags'] = $tags;
-		}
 
 		$requestOptions = [];
 		$requestOptions['form_params'] = $bodyParameters;
@@ -337,14 +300,13 @@ class IpManager
 
 		$requestBody = json_decode((string) $request->getBody(), true);
 
-		$response = new IpResponse(
+		$response = new ProjectTagResponse(
 			$this->apiClient, 
-			new Ip(
+			new ProjectTag(
 				$this->apiClient, 
 				$requestBody['data']['project_id'], 
-				$requestBody['data']['ip'], 
-				$requestBody['data']['ip_status_id'], 
-				$requestBody['data']['v6'], 
+				$requestBody['data']['name'], 
+				(isset($requestBody['data']['ip_status_id']) ? $requestBody['data']['ip_status_id'] : null), 
 				$requestBody['data']['created_at'], 
 				$requestBody['data']['updated_at']
 			)
@@ -354,24 +316,24 @@ class IpManager
 	}
 	
 	/**
-	 * Delete specified ip
+	 * Delete specified project tag
 	 * 
 	 * Excepted HTTP code : 204
 	 * 
 	 * @param string $projectId Project ID
-	 * @param string $ip Ip
+	 * @param string $name Name
 	 * 
 	 * @return ErrorResponse
 	 * 
 	 * @throws UnexpectedResponseException
 	 */
-	public function delete($projectId, $ip)
+	public function delete($projectId, $name)
 	{
-		$routePath = '/api/ip/{projectId},{ip}';
+		$routePath = '/api/projectTag/{projectId},{projectTagName}';
 
 		$pathReplacements = [
 			'{projectId}' => $projectId,
-			'{ip}' => $ip,
+			'{name}' => $name,
 		];
 
 		$routeUrl = str_replace(array_keys($pathReplacements), array_values($pathReplacements), $routePath);

@@ -143,19 +143,21 @@ class ProjectManager
 	 * Excepted HTTP code : 201
 	 * 
 	 * @param string $name
+	 * @param mixed $tags
 	 * 
 	 * @return ProjectResponse
 	 * 
 	 * @throws UnexpectedResponseException
 	 */
-	public function create($name = null)
+	public function create($name, $tags = null)
 	{
 		$routeUrl = '/api/project';
 
 		$bodyParameters = [];
+		$bodyParameters['name'] = $name;
 
-		if (!is_null($name)) {
-			$bodyParameters['name'] = $name;
+		if (!is_null($tags)) {
+			$bodyParameters['tags'] = $tags;
 		}
 
 		$requestOptions = [];
@@ -261,12 +263,13 @@ class ProjectManager
 	 * 
 	 * @param string $projectId Project UUID
 	 * @param string $name
+	 * @param mixed $tags
 	 * 
 	 * @return ProjectResponse
 	 * 
 	 * @throws UnexpectedResponseException
 	 */
-	public function update($projectId, $name = null)
+	public function update($projectId, $name = null, $tags = null)
 	{
 		$routePath = '/api/project/{projectId}';
 
@@ -280,6 +283,10 @@ class ProjectManager
 
 		if (!is_null($name)) {
 			$bodyParameters['name'] = $name;
+		}
+
+		if (!is_null($tags)) {
+			$bodyParameters['tags'] = $tags;
 		}
 
 		$requestOptions = [];

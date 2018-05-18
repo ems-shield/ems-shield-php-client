@@ -213,12 +213,13 @@ class Project
 	 * Excepted HTTP code : 200
 	 * 
 	 * @param string $name
+	 * @param mixed $tags
 	 * 
 	 * @return ProjectResponse
 	 * 
 	 * @throws UnexpectedResponseException
 	 */
-	public function update($name = null)
+	public function update($name = null, $tags = null)
 	{
 		$routePath = '/api/project/{projectId}';
 
@@ -232,6 +233,10 @@ class Project
 
 		if (!is_null($name)) {
 			$bodyParameters['name'] = $name;
+		}
+
+		if (!is_null($tags)) {
+			$bodyParameters['tags'] = $tags;
 		}
 
 		$requestOptions = [];
@@ -398,6 +403,190 @@ class Project
 					$data['ip'], 
 					$data['ip_status_id'], 
 					$data['v6'], 
+					$data['created_at'], 
+					$data['updated_at']
+				); 
+			}, $requestBody['data']), 
+			new Meta(
+				$this->apiClient, 
+				((isset($requestBody['meta']['pagination']) && !is_null($requestBody['meta']['pagination'])) ? (new Pagination(
+					$this->apiClient, 
+					$requestBody['meta']['pagination']['total'], 
+					$requestBody['meta']['pagination']['count'], 
+					$requestBody['meta']['pagination']['per_page'], 
+					$requestBody['meta']['pagination']['current_page'], 
+					$requestBody['meta']['pagination']['total_pages'], 
+					$requestBody['meta']['pagination']['links']
+				)) : null)
+			)
+		);
+
+		return $response;
+	}
+	
+	/**
+	 * Show project project tag list
+	 * 
+	 * Excepted HTTP code : 200
+	 * 
+	 * @param string $search Search words
+	 * @param int $page Format: int32. Pagination : Page number
+	 * @param int $limit Format: int32. Pagination : Maximum entries per page
+	 * @param string $order_by Order by : {field},[asc|desc]
+	 * 
+	 * @return ProjectTagListResponse
+	 * 
+	 * @throws UnexpectedResponseException
+	 */
+	public function getProjectTags($search = null, $page = null, $limit = null, $order_by = null)
+	{
+		$routePath = '/api/project/{projectId}/projectTag';
+
+		$pathReplacements = [
+			'{projectId}' => $this->id,
+		];
+
+		$routeUrl = str_replace(array_keys($pathReplacements), array_values($pathReplacements), $routePath);
+
+		$queryParameters = [];
+
+		if (!is_null($search)) {
+			$queryParameters['search'] = $search;
+		}
+
+		if (!is_null($page)) {
+			$queryParameters['page'] = $page;
+		}
+
+		if (!is_null($limit)) {
+			$queryParameters['limit'] = $limit;
+		}
+
+		if (!is_null($order_by)) {
+			$queryParameters['order_by'] = $order_by;
+		}
+
+		$requestOptions = [];
+		$requestOptions['query'] = $queryParameters;
+
+		$request = $this->apiClient->getHttpClient()->request('get', $routeUrl, $requestOptions);
+
+		if ($request->getStatusCode() != 200) {
+			$requestBody = json_decode((string) $request->getBody(), true);
+
+			$apiExceptionResponse = new ErrorResponse(
+				$this->apiClient, 
+				$requestBody['message'], 
+				(isset($requestBody['errors']) ? $requestBody['errors'] : null), 
+				(isset($requestBody['status_code']) ? $requestBody['status_code'] : null), 
+				(isset($requestBody['debug']) ? $requestBody['debug'] : null)
+			);
+
+			throw new UnexpectedResponseException($request->getStatusCode(), 200, $request, $apiExceptionResponse);
+		}
+
+		$requestBody = json_decode((string) $request->getBody(), true);
+
+		$response = new ProjectTagListResponse(
+			$this->apiClient, 
+			array_map(function($data) {
+				return new ProjectTag(
+					$this->apiClient, 
+					$data['project_id'], 
+					$data['name'], 
+					(isset($data['ip_status_id']) ? $data['ip_status_id'] : null), 
+					$data['created_at'], 
+					$data['updated_at']
+				); 
+			}, $requestBody['data']), 
+			new Meta(
+				$this->apiClient, 
+				((isset($requestBody['meta']['pagination']) && !is_null($requestBody['meta']['pagination'])) ? (new Pagination(
+					$this->apiClient, 
+					$requestBody['meta']['pagination']['total'], 
+					$requestBody['meta']['pagination']['count'], 
+					$requestBody['meta']['pagination']['per_page'], 
+					$requestBody['meta']['pagination']['current_page'], 
+					$requestBody['meta']['pagination']['total_pages'], 
+					$requestBody['meta']['pagination']['links']
+				)) : null)
+			)
+		);
+
+		return $response;
+	}
+	
+	/**
+	 * Show project assigned project tag list
+	 * 
+	 * Excepted HTTP code : 200
+	 * 
+	 * @param string $search Search words
+	 * @param int $page Format: int32. Pagination : Page number
+	 * @param int $limit Format: int32. Pagination : Maximum entries per page
+	 * @param string $order_by Order by : {field},[asc|desc]
+	 * 
+	 * @return ProjectTagListResponse
+	 * 
+	 * @throws UnexpectedResponseException
+	 */
+	public function getAssignedProjectTags($search = null, $page = null, $limit = null, $order_by = null)
+	{
+		$routePath = '/api/project/{projectId}/assignedProjectTag';
+
+		$pathReplacements = [
+			'{projectId}' => $this->id,
+		];
+
+		$routeUrl = str_replace(array_keys($pathReplacements), array_values($pathReplacements), $routePath);
+
+		$queryParameters = [];
+
+		if (!is_null($search)) {
+			$queryParameters['search'] = $search;
+		}
+
+		if (!is_null($page)) {
+			$queryParameters['page'] = $page;
+		}
+
+		if (!is_null($limit)) {
+			$queryParameters['limit'] = $limit;
+		}
+
+		if (!is_null($order_by)) {
+			$queryParameters['order_by'] = $order_by;
+		}
+
+		$requestOptions = [];
+		$requestOptions['query'] = $queryParameters;
+
+		$request = $this->apiClient->getHttpClient()->request('get', $routeUrl, $requestOptions);
+
+		if ($request->getStatusCode() != 200) {
+			$requestBody = json_decode((string) $request->getBody(), true);
+
+			$apiExceptionResponse = new ErrorResponse(
+				$this->apiClient, 
+				$requestBody['message'], 
+				(isset($requestBody['errors']) ? $requestBody['errors'] : null), 
+				(isset($requestBody['status_code']) ? $requestBody['status_code'] : null), 
+				(isset($requestBody['debug']) ? $requestBody['debug'] : null)
+			);
+
+			throw new UnexpectedResponseException($request->getStatusCode(), 200, $request, $apiExceptionResponse);
+		}
+
+		$requestBody = json_decode((string) $request->getBody(), true);
+
+		$response = new ProjectTagListResponse(
+			$this->apiClient, 
+			array_map(function($data) {
+				return new ProjectTag(
+					$this->apiClient, 
+					$data['project_id'], 
+					$data['name'], 
+					(isset($data['ip_status_id']) ? $data['ip_status_id'] : null), 
 					$data['created_at'], 
 					$data['updated_at']
 				); 
