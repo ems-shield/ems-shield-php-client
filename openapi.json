@@ -4590,6 +4590,7 @@
                     "Resource:ProjectTag"
                 ],
                 "summary": "Show project tag ip list",
+                "description": "You can specify a GET parameter `ip_version` to filter results.",
                 "operationId": "getIps",
                 "parameters": [
                     {
@@ -4607,6 +4608,18 @@
                         "description": "Name",
                         "required": true,
                         "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "ip_version",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "enum": [
+                                "v4",
+                                "v6"
+                            ],
                             "type": "string"
                         }
                     },
@@ -5597,8 +5610,8 @@
                         "name": "John Doe",
                         "email": "john.doe@domain.tld",
                         "preferred_language": "en",
-                        "created_at": "2018-05-18 13:55:14",
-                        "updated_at": "2018-05-18 13:55:14"
+                        "created_at": "2018-05-18 14:43:39",
+                        "updated_at": "2018-05-18 14:43:39"
                     }
                 }
             },
@@ -5606,70 +5619,7 @@
                 "value": {
                     "data": [
                         {
-                            "id": "af6586dd-e8f2-49d8-92ce-7fed14df7469",
-                            "type": "App\\Notifications\\UserCreatedNotification",
-                            "notifiable_id": "41abdec2-1389-11e7-93ae-92361f002671",
-                            "notifiable_type": "App\\Models\\User",
-                            "data": {
-                                "user_id": "41abdec2-1389-11e7-93ae-92361f002671",
-                                "user": {
-                                    "name": "John Doe",
-                                    "email": "john.doe@domain.tld",
-                                    "created_at": {
-                                        "date": "2018-05-18 13:55:14.000000",
-                                        "timezone_type": 3,
-                                        "timezone": "UTC"
-                                    }
-                                }
-                            },
-                            "read_at": null,
-                            "created_at": "2018-05-18 13:55:14",
-                            "updated_at": "2018-05-18 13:55:14"
-                        },
-                        {
-                            "id": "c3ab3331-932c-4ca2-89c3-804697b88f7b",
-                            "type": "App\\Notifications\\UserCreatedNotification",
-                            "notifiable_id": "41abdec2-1389-11e7-93ae-92361f002671",
-                            "notifiable_type": "App\\Models\\User",
-                            "data": {
-                                "user_id": "509dd5c0-1389-11e7-93ae-92361f002671",
-                                "user": {
-                                    "name": "Alan Smithee",
-                                    "email": "alan.smithee@domain.tld",
-                                    "created_at": {
-                                        "date": "2018-05-18 13:55:14.000000",
-                                        "timezone_type": 3,
-                                        "timezone": "UTC"
-                                    }
-                                }
-                            },
-                            "read_at": null,
-                            "created_at": "2018-05-18 13:55:14",
-                            "updated_at": "2018-05-18 13:55:14"
-                        },
-                        {
-                            "id": "d375deef-4e1f-46fe-9630-37274d16d4e9",
-                            "type": "App\\Notifications\\UserCreatedNotification",
-                            "notifiable_id": "41abdec2-1389-11e7-93ae-92361f002671",
-                            "notifiable_type": "App\\Models\\User",
-                            "data": {
-                                "user_id": "82b5da82-138c-11e7-93ae-92361f002671",
-                                "user": {
-                                    "name": "Mickey Mouse",
-                                    "email": "mickey.mouse@domain.tld",
-                                    "created_at": {
-                                        "date": "2018-05-18 13:55:14.000000",
-                                        "timezone_type": 3,
-                                        "timezone": "UTC"
-                                    }
-                                }
-                            },
-                            "read_at": null,
-                            "created_at": "2018-05-18 13:55:14",
-                            "updated_at": "2018-05-18 13:55:14"
-                        },
-                        {
-                            "id": "f423720f-8f37-427d-8864-4bc17caa31cc",
+                            "id": "03404fc7-7c6d-4b4e-a990-fa94cb0a93c8",
                             "type": "App\\Notifications\\UserCreatedNotification",
                             "notifiable_id": "41abdec2-1389-11e7-93ae-92361f002671",
                             "notifiable_type": "App\\Models\\User",
@@ -5679,15 +5629,78 @@
                                     "name": "John Smith",
                                     "email": "john.smith@domain.tld",
                                     "created_at": {
-                                        "date": "2018-05-18 13:55:14.000000",
+                                        "date": "2018-05-18 14:43:39.000000",
                                         "timezone_type": 3,
                                         "timezone": "UTC"
                                     }
                                 }
                             },
                             "read_at": null,
-                            "created_at": "2018-05-18 13:55:14",
-                            "updated_at": "2018-05-18 13:55:14"
+                            "created_at": "2018-05-18 14:43:39",
+                            "updated_at": "2018-05-18 14:43:39"
+                        },
+                        {
+                            "id": "1b1e1a0b-8099-44b4-9236-29fe3bf7466a",
+                            "type": "App\\Notifications\\UserCreatedNotification",
+                            "notifiable_id": "41abdec2-1389-11e7-93ae-92361f002671",
+                            "notifiable_type": "App\\Models\\User",
+                            "data": {
+                                "user_id": "41abdec2-1389-11e7-93ae-92361f002671",
+                                "user": {
+                                    "name": "John Doe",
+                                    "email": "john.doe@domain.tld",
+                                    "created_at": {
+                                        "date": "2018-05-18 14:43:39.000000",
+                                        "timezone_type": 3,
+                                        "timezone": "UTC"
+                                    }
+                                }
+                            },
+                            "read_at": null,
+                            "created_at": "2018-05-18 14:43:39",
+                            "updated_at": "2018-05-18 14:43:39"
+                        },
+                        {
+                            "id": "98a72108-5db3-4947-b1d1-e21fb8bdbfc0",
+                            "type": "App\\Notifications\\UserCreatedNotification",
+                            "notifiable_id": "41abdec2-1389-11e7-93ae-92361f002671",
+                            "notifiable_type": "App\\Models\\User",
+                            "data": {
+                                "user_id": "509dd5c0-1389-11e7-93ae-92361f002671",
+                                "user": {
+                                    "name": "Alan Smithee",
+                                    "email": "alan.smithee@domain.tld",
+                                    "created_at": {
+                                        "date": "2018-05-18 14:43:39.000000",
+                                        "timezone_type": 3,
+                                        "timezone": "UTC"
+                                    }
+                                }
+                            },
+                            "read_at": null,
+                            "created_at": "2018-05-18 14:43:39",
+                            "updated_at": "2018-05-18 14:43:39"
+                        },
+                        {
+                            "id": "c6a95d66-ebd0-4d83-b510-69bfd9d999ec",
+                            "type": "App\\Notifications\\UserCreatedNotification",
+                            "notifiable_id": "41abdec2-1389-11e7-93ae-92361f002671",
+                            "notifiable_type": "App\\Models\\User",
+                            "data": {
+                                "user_id": "82b5da82-138c-11e7-93ae-92361f002671",
+                                "user": {
+                                    "name": "Mickey Mouse",
+                                    "email": "mickey.mouse@domain.tld",
+                                    "created_at": {
+                                        "date": "2018-05-18 14:43:39.000000",
+                                        "timezone_type": 3,
+                                        "timezone": "UTC"
+                                    }
+                                }
+                            },
+                            "read_at": null,
+                            "created_at": "2018-05-18 14:43:39",
+                            "updated_at": "2018-05-18 14:43:39"
                         }
                     ],
                     "meta": {
@@ -5754,8 +5767,8 @@
                             "name": "John Doe",
                             "email": "john.doe@domain.tld",
                             "preferred_language": "en",
-                            "created_at": "2018-05-18 13:55:14",
-                            "updated_at": "2018-05-18 13:55:14"
+                            "created_at": "2018-05-18 14:43:39",
+                            "updated_at": "2018-05-18 14:43:39"
                         },
                         {
                             "id": "509dd5c0-1389-11e7-93ae-92361f002671",
@@ -5763,8 +5776,8 @@
                             "name": "Alan Smithee",
                             "email": "alan.smithee@domain.tld",
                             "preferred_language": "fr",
-                            "created_at": "2018-05-18 13:55:14",
-                            "updated_at": "2018-05-18 13:55:14"
+                            "created_at": "2018-05-18 14:43:39",
+                            "updated_at": "2018-05-18 14:43:39"
                         },
                         {
                             "id": "605c7610-1389-11e7-93ae-92361f002671",
@@ -5772,8 +5785,8 @@
                             "name": "John Smith",
                             "email": "john.smith@domain.tld",
                             "preferred_language": "en",
-                            "created_at": "2018-05-18 13:55:14",
-                            "updated_at": "2018-05-18 13:55:14"
+                            "created_at": "2018-05-18 14:43:39",
+                            "updated_at": "2018-05-18 14:43:39"
                         },
                         {
                             "id": "82b5da82-138c-11e7-93ae-92361f002671",
@@ -5781,8 +5794,8 @@
                             "name": "Mickey Mouse",
                             "email": "mickey.mouse@domain.tld",
                             "preferred_language": "fr",
-                            "created_at": "2018-05-18 13:55:14",
-                            "updated_at": "2018-05-18 13:55:14"
+                            "created_at": "2018-05-18 14:43:39",
+                            "updated_at": "2018-05-18 14:43:39"
                         }
                     ],
                     "meta": {
@@ -5861,8 +5874,8 @@
                         {
                             "id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "name": "Sample Project",
-                            "created_at": "2018-05-18 13:55:14",
-                            "updated_at": "2018-05-18 13:55:14"
+                            "created_at": "2018-05-18 14:43:39",
+                            "updated_at": "2018-05-18 14:43:39"
                         }
                     ],
                     "meta": {
@@ -5884,15 +5897,15 @@
                             "user_id": "605c7610-1389-11e7-93ae-92361f002671",
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "user_role_id": "Owner",
-                            "created_at": "2018-05-18 13:55:14",
-                            "updated_at": "2018-05-18 13:55:14"
+                            "created_at": "2018-05-18 14:43:39",
+                            "updated_at": "2018-05-18 14:43:39"
                         },
                         {
                             "user_id": "82b5da82-138c-11e7-93ae-92361f002671",
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "user_role_id": "Administrator",
-                            "created_at": "2018-05-18 13:55:14",
-                            "updated_at": "2018-05-18 13:55:14"
+                            "created_at": "2018-05-18 14:43:39",
+                            "updated_at": "2018-05-18 14:43:39"
                         }
                     ],
                     "meta": {
@@ -5939,43 +5952,43 @@
                             "ip_status_id": "Blocked",
                             "i18n_lang_id": "en",
                             "description": "Blocked access",
-                            "created_at": "2018-05-18 13:55:11",
-                            "updated_at": "2018-05-18 13:55:11"
+                            "created_at": "2018-05-18 14:43:35",
+                            "updated_at": "2018-05-18 14:43:35"
                         },
                         {
                             "ip_status_id": "Blocked",
                             "i18n_lang_id": "fr",
                             "description": "Acc\u00e8s bloqu\u00e9",
-                            "created_at": "2018-05-18 13:55:11",
-                            "updated_at": "2018-05-18 13:55:11"
+                            "created_at": "2018-05-18 14:43:35",
+                            "updated_at": "2018-05-18 14:43:35"
                         },
                         {
                             "ip_status_id": "None",
                             "i18n_lang_id": "en",
                             "description": "Unknown status, not blocked, not whitelisted",
-                            "created_at": "2018-05-18 13:55:11",
-                            "updated_at": "2018-05-18 13:55:11"
+                            "created_at": "2018-05-18 14:43:35",
+                            "updated_at": "2018-05-18 14:43:35"
                         },
                         {
                             "ip_status_id": "None",
                             "i18n_lang_id": "fr",
                             "description": "Statut inconnu, ni bloqu\u00e9e, ni whitelist\u00e9e",
-                            "created_at": "2018-05-18 13:55:11",
-                            "updated_at": "2018-05-18 13:55:11"
+                            "created_at": "2018-05-18 14:43:35",
+                            "updated_at": "2018-05-18 14:43:35"
                         },
                         {
                             "ip_status_id": "Whitelisted",
                             "i18n_lang_id": "en",
                             "description": "Allowed access",
-                            "created_at": "2018-05-18 13:55:11",
-                            "updated_at": "2018-05-18 13:55:11"
+                            "created_at": "2018-05-18 14:43:35",
+                            "updated_at": "2018-05-18 14:43:35"
                         },
                         {
                             "ip_status_id": "Whitelisted",
                             "i18n_lang_id": "fr",
                             "description": "Acc\u00e8s autoris\u00e9",
-                            "created_at": "2018-05-18 13:55:11",
-                            "updated_at": "2018-05-18 13:55:11"
+                            "created_at": "2018-05-18 14:43:35",
+                            "updated_at": "2018-05-18 14:43:35"
                         }
                     ],
                     "meta": {
@@ -5998,40 +6011,40 @@
                             "ip": "193.248.37.16",
                             "ip_status_id": "Whitelisted",
                             "v6": false,
-                            "created_at": "2018-05-18 13:55:14",
-                            "updated_at": "2018-05-18 13:55:14"
+                            "created_at": "2018-05-18 14:43:39",
+                            "updated_at": "2018-05-18 14:43:39"
                         },
                         {
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "ip": "195.154.168.140",
                             "ip_status_id": "Blocked",
                             "v6": false,
-                            "created_at": "2018-05-18 13:55:14",
-                            "updated_at": "2018-05-18 13:55:14"
+                            "created_at": "2018-05-18 14:43:39",
+                            "updated_at": "2018-05-18 14:43:39"
                         },
                         {
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "ip": "2001:0660:7401:0200:0000:0000:0edf:bdd7",
                             "ip_status_id": "None",
                             "v6": true,
-                            "created_at": "2018-05-18 13:55:14",
-                            "updated_at": "2018-05-18 13:55:14"
+                            "created_at": "2018-05-18 14:43:39",
+                            "updated_at": "2018-05-18 14:43:39"
                         },
                         {
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "ip": "66.249.79.8",
                             "ip_status_id": "Whitelisted",
                             "v6": false,
-                            "created_at": "2018-05-18 13:55:14",
-                            "updated_at": "2018-05-18 13:55:14"
+                            "created_at": "2018-05-18 14:43:39",
+                            "updated_at": "2018-05-18 14:43:39"
                         },
                         {
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "ip": "98.139.190.58",
                             "ip_status_id": "None",
                             "v6": false,
-                            "created_at": "2018-05-18 13:55:14",
-                            "updated_at": "2018-05-18 13:55:14"
+                            "created_at": "2018-05-18 14:43:39",
+                            "updated_at": "2018-05-18 14:43:39"
                         }
                     ],
                     "meta": {
@@ -6057,8 +6070,8 @@
                             "user_id": "605c7610-1389-11e7-93ae-92361f002671",
                             "entry": "Checking IP address",
                             "position": 1,
-                            "created_at": "2018-05-18 13:55:14",
-                            "updated_at": "2018-05-18 13:55:14"
+                            "created_at": "2018-05-18 14:43:39",
+                            "updated_at": "2018-05-18 14:43:39"
                         },
                         {
                             "id": "7cea50e8-4dff-11e8-9c2d-fa7ae01bbebc",
@@ -6068,8 +6081,8 @@
                             "user_id": "82b5da82-138c-11e7-93ae-92361f002671",
                             "entry": "googlebot (https:\/\/whatismyipaddress.com\/ip\/66.249.79.8)",
                             "position": 2,
-                            "created_at": "2018-05-18 13:55:16",
-                            "updated_at": "2018-05-18 13:55:16"
+                            "created_at": "2018-05-18 14:43:41",
+                            "updated_at": "2018-05-18 14:43:41"
                         },
                         {
                             "id": "83a0bf9e-4dff-11e8-9c2d-fa7ae01bbebc",
@@ -6079,8 +6092,8 @@
                             "user_id": null,
                             "entry": "kask.fi (https:\/\/www.abuseipdb.com\/check\/195.154.168.140)",
                             "position": 1,
-                            "created_at": "2018-05-18 13:55:16",
-                            "updated_at": "2018-05-18 13:55:16"
+                            "created_at": "2018-05-18 14:43:41",
+                            "updated_at": "2018-05-18 14:43:41"
                         },
                         {
                             "id": "b9b4a03c-4dff-11e8-9c2d-fa7ae01bbebc",
@@ -6090,8 +6103,8 @@
                             "user_id": null,
                             "entry": "Amiens, E-monsite devs (https:\/\/whatismyipaddress.com\/ip\/193.248.37.16)",
                             "position": 1,
-                            "created_at": "2018-05-18 13:55:16",
-                            "updated_at": "2018-05-18 13:55:16"
+                            "created_at": "2018-05-18 14:43:41",
+                            "updated_at": "2018-05-18 14:43:41"
                         },
                         {
                             "id": "dfe56c96-4dff-11e8-9c2d-fa7ae01bbebc",
@@ -6101,8 +6114,8 @@
                             "user_id": null,
                             "entry": "Yahoo! (https:\/\/www.ip-finder.me\/98.139.190.58\/)",
                             "position": 1,
-                            "created_at": "2018-05-18 13:55:16",
-                            "updated_at": "2018-05-18 13:55:16"
+                            "created_at": "2018-05-18 14:43:42",
+                            "updated_at": "2018-05-18 14:43:42"
                         },
                         {
                             "id": "f5ee09ee-4dff-11e8-9c2d-fa7ae01bbebc",
@@ -6112,8 +6125,8 @@
                             "user_id": null,
                             "entry": "Random IPv6",
                             "position": 1,
-                            "created_at": "2018-05-18 13:55:16",
-                            "updated_at": "2018-05-18 13:55:16"
+                            "created_at": "2018-05-18 14:43:42",
+                            "updated_at": "2018-05-18 14:43:42"
                         }
                     ],
                     "meta": {
@@ -6134,38 +6147,38 @@
                         {
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "name": "bad bot",
-                            "created_at": "2018-05-18 13:55:16",
-                            "updated_at": "2018-05-18 13:55:16"
+                            "created_at": "2018-05-18 14:43:42",
+                            "updated_at": "2018-05-18 14:43:42"
                         },
                         {
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "name": "googlebot",
-                            "created_at": "2018-05-18 13:55:16",
-                            "updated_at": "2018-05-18 13:55:16"
+                            "created_at": "2018-05-18 14:43:42",
+                            "updated_at": "2018-05-18 14:43:42"
                         },
                         {
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "name": "kask.fi",
-                            "created_at": "2018-05-18 13:55:16",
-                            "updated_at": "2018-05-18 13:55:16"
+                            "created_at": "2018-05-18 14:43:42",
+                            "updated_at": "2018-05-18 14:43:42"
                         },
                         {
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "name": "sample ip",
-                            "created_at": "2018-05-18 13:55:16",
-                            "updated_at": "2018-05-18 13:55:16"
+                            "created_at": "2018-05-18 14:43:42",
+                            "updated_at": "2018-05-18 14:43:42"
                         },
                         {
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "name": "sample project",
-                            "created_at": "2018-05-18 13:55:16",
-                            "updated_at": "2018-05-18 13:55:16"
+                            "created_at": "2018-05-18 14:43:42",
+                            "updated_at": "2018-05-18 14:43:42"
                         },
                         {
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "name": "sample tag",
-                            "created_at": "2018-05-18 13:55:16",
-                            "updated_at": "2018-05-18 13:55:16"
+                            "created_at": "2018-05-18 14:43:42",
+                            "updated_at": "2018-05-18 14:43:42"
                         }
                     ],
                     "meta": {
@@ -6189,8 +6202,8 @@
                             "project_tag_name": "bad bot",
                             "taggable_id": "195.154.168.140",
                             "taggable_type": "App\\Models\\Ip",
-                            "created_at": "2018-05-18 13:55:16",
-                            "updated_at": "2018-05-18 13:55:16"
+                            "created_at": "2018-05-18 14:43:42",
+                            "updated_at": "2018-05-18 14:43:42"
                         },
                         {
                             "id": "2524b9b4-58e7-11e8-9c2d-fa7ae01bbebc",
@@ -6198,8 +6211,8 @@
                             "project_tag_name": "kask.fi",
                             "taggable_id": "195.154.168.140",
                             "taggable_type": "App\\Models\\Ip",
-                            "created_at": "2018-05-18 13:55:18",
-                            "updated_at": "2018-05-18 13:55:18"
+                            "created_at": "2018-05-18 14:43:44",
+                            "updated_at": "2018-05-18 14:43:44"
                         },
                         {
                             "id": "3dcd00ac-5838-11e8-9c2d-fa7ae01bbebc",
@@ -6207,8 +6220,8 @@
                             "project_tag_name": "googlebot",
                             "taggable_id": "66.249.79.8",
                             "taggable_type": "App\\Models\\Ip",
-                            "created_at": "2018-05-18 13:55:16",
-                            "updated_at": "2018-05-18 13:55:16"
+                            "created_at": "2018-05-18 14:43:42",
+                            "updated_at": "2018-05-18 14:43:42"
                         },
                         {
                             "id": "cfa66100-5836-11e8-9c2d-fa7ae01bbebc",
@@ -6216,8 +6229,8 @@
                             "project_tag_name": "sample project",
                             "taggable_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "taggable_type": "App\\Models\\Project",
-                            "created_at": "2018-05-18 13:55:16",
-                            "updated_at": "2018-05-18 13:55:16"
+                            "created_at": "2018-05-18 14:43:42",
+                            "updated_at": "2018-05-18 14:43:42"
                         }
                     ],
                     "meta": {

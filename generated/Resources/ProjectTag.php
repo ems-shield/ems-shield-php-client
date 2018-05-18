@@ -281,8 +281,11 @@ class ProjectTag
 	/**
 	 * Show project tag ip list
 	 * 
+	 * You can specify a GET parameter `ip_version` to filter results.
+	 * 
 	 * Excepted HTTP code : 200
 	 * 
+	 * @param string $ip_version
 	 * @param string $search Search words
 	 * @param int $page Format: int32. Pagination : Page number
 	 * @param int $limit Format: int32. Pagination : Maximum entries per page
@@ -292,7 +295,7 @@ class ProjectTag
 	 * 
 	 * @throws UnexpectedResponseException
 	 */
-	public function getIps($search = null, $page = null, $limit = null, $order_by = null)
+	public function getIps($ip_version = null, $search = null, $page = null, $limit = null, $order_by = null)
 	{
 		$routePath = '/api/projectTag/{projectId},{projectTagName}/ip';
 
@@ -304,6 +307,10 @@ class ProjectTag
 		$routeUrl = str_replace(array_keys($pathReplacements), array_values($pathReplacements), $routePath);
 
 		$queryParameters = [];
+
+		if (!is_null($ip_version)) {
+			$queryParameters['ip_version'] = $ip_version;
+		}
 
 		if (!is_null($search)) {
 			$queryParameters['search'] = $search;
