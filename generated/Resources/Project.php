@@ -27,20 +27,6 @@ class Project
 	public $id;
 
 	/**
-	 * Format: uuid.
-	 * 
-	 * @var string
-	 */
-	public $search_engine_id;
-
-	/**
-	 * Format: uuid.
-	 * 
-	 * @var string
-	 */
-	public $data_stream_id;
-
-	/**
 	 * @var string
 	 */
 	public $name;
@@ -64,18 +50,14 @@ class Project
 	 * 
 	 * @param ApiClient $apiClient API Client to use for this manager requests
 	 * @param string $id Format: uuid.
-	 * @param string $search_engine_id Format: uuid.
-	 * @param string $data_stream_id Format: uuid.
 	 * @param string $name
 	 * @param string $created_at Format: date-time.
 	 * @param string $updated_at Format: date-time.
 	 */
-	public function __construct(ApiClient $apiClient, $id = null, $search_engine_id = null, $data_stream_id = null, $name = null, $created_at = null, $updated_at = null)
+	public function __construct(ApiClient $apiClient, $id = null, $name = null, $created_at = null, $updated_at = null)
 	{
 		$this->apiClient = $apiClient;
 		$this->id = $id;
-		$this->search_engine_id = $search_engine_id;
-		$this->data_stream_id = $data_stream_id;
 		$this->name = $name;
 		$this->created_at = $created_at;
 		$this->updated_at = $updated_at;
@@ -179,8 +161,6 @@ class Project
 						new Project(
 							$this->apiClient, 
 							$data['project']['data']['id'], 
-							$data['project']['data']['search_engine_id'], 
-							$data['project']['data']['data_stream_id'], 
 							$data['project']['data']['name'], 
 							$data['project']['data']['created_at'], 
 							$data['project']['data']['updated_at']
@@ -265,8 +245,6 @@ class Project
 			new Project(
 				$this->apiClient, 
 				$requestBody['data']['id'], 
-				$requestBody['data']['search_engine_id'], 
-				$requestBody['data']['data_stream_id'], 
 				$requestBody['data']['name'], 
 				$requestBody['data']['created_at'], 
 				$requestBody['data']['updated_at']

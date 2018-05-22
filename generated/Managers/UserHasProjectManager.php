@@ -140,8 +140,6 @@ class UserHasProjectManager
 						new Project(
 							$this->apiClient, 
 							$data['project']['data']['id'], 
-							$data['project']['data']['search_engine_id'], 
-							$data['project']['data']['data_stream_id'], 
 							$data['project']['data']['name'], 
 							$data['project']['data']['created_at'], 
 							$data['project']['data']['updated_at']
@@ -239,8 +237,6 @@ class UserHasProjectManager
 					new Project(
 						$this->apiClient, 
 						$requestBody['data']['project']['data']['id'], 
-						$requestBody['data']['project']['data']['search_engine_id'], 
-						$requestBody['data']['project']['data']['data_stream_id'], 
 						$requestBody['data']['project']['data']['name'], 
 						$requestBody['data']['project']['data']['created_at'], 
 						$requestBody['data']['project']['data']['updated_at']
@@ -331,8 +327,6 @@ class UserHasProjectManager
 					new Project(
 						$this->apiClient, 
 						$requestBody['data']['project']['data']['id'], 
-						$requestBody['data']['project']['data']['search_engine_id'], 
-						$requestBody['data']['project']['data']['data_stream_id'], 
 						$requestBody['data']['project']['data']['name'], 
 						$requestBody['data']['project']['data']['created_at'], 
 						$requestBody['data']['project']['data']['updated_at']
@@ -426,8 +420,6 @@ class UserHasProjectManager
 					new Project(
 						$this->apiClient, 
 						$requestBody['data']['project']['data']['id'], 
-						$requestBody['data']['project']['data']['search_engine_id'], 
-						$requestBody['data']['project']['data']['data_stream_id'], 
 						$requestBody['data']['project']['data']['name'], 
 						$requestBody['data']['project']['data']['created_at'], 
 						$requestBody['data']['project']['data']['updated_at']

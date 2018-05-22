@@ -113,8 +113,6 @@ class ProjectManager
 				return new Project(
 					$this->apiClient, 
 					$data['id'], 
-					$data['search_engine_id'], 
-					$data['data_stream_id'], 
 					$data['name'], 
 					$data['created_at'], 
 					$data['updated_at']
@@ -186,8 +184,6 @@ class ProjectManager
 			new Project(
 				$this->apiClient, 
 				$requestBody['data']['id'], 
-				$requestBody['data']['search_engine_id'], 
-				$requestBody['data']['data_stream_id'], 
 				$requestBody['data']['name'], 
 				$requestBody['data']['created_at'], 
 				$requestBody['data']['updated_at']
@@ -243,8 +239,6 @@ class ProjectManager
 			new Project(
 				$this->apiClient, 
 				$requestBody['data']['id'], 
-				$requestBody['data']['search_engine_id'], 
-				$requestBody['data']['data_stream_id'], 
 				$requestBody['data']['name'], 
 				$requestBody['data']['created_at'], 
 				$requestBody['data']['updated_at']
@@ -315,8 +309,6 @@ class ProjectManager
 			new Project(
 				$this->apiClient, 
 				$requestBody['data']['id'], 
-				$requestBody['data']['search_engine_id'], 
-				$requestBody['data']['data_stream_id'], 
 				$requestBody['data']['name'], 
 				$requestBody['data']['created_at'], 
 				$requestBody['data']['updated_at']

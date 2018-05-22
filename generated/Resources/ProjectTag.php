@@ -462,8 +462,6 @@ class ProjectTag
 				return new Project(
 					$this->apiClient, 
 					$data['id'], 
-					$data['search_engine_id'], 
-					$data['data_stream_id'], 
 					$data['name'], 
 					$data['created_at'], 
 					$data['updated_at']

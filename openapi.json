@@ -5086,22 +5086,12 @@
             "Project": {
                 "required": [
                     "id",
-                    "search_engine_id",
-                    "data_stream_id",
                     "name",
                     "created_at",
                     "updated_at"
                 ],
                 "properties": {
                     "id": {
-                        "type": "string",
-                        "format": "uuid"
-                    },
-                    "search_engine_id": {
-                        "type": "string",
-                        "format": "uuid"
-                    },
-                    "data_stream_id": {
                         "type": "string",
                         "format": "uuid"
                     },
