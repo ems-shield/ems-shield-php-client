@@ -34,6 +34,11 @@ class ProjectTag
 	/**
 	 * @var string
 	 */
+	public $color;
+
+	/**
+	 * @var string
+	 */
 	public $ip_status_id;
 
 	/**
@@ -56,15 +61,17 @@ class ProjectTag
 	 * @param ApiClient $apiClient API Client to use for this manager requests
 	 * @param string $project_id Format: uuid.
 	 * @param string $name
+	 * @param string $color
 	 * @param string $ip_status_id
 	 * @param string $created_at Format: date-time.
 	 * @param string $updated_at Format: date-time.
 	 */
-	public function __construct(ApiClient $apiClient, $project_id = null, $name = null, $ip_status_id = null, $created_at = null, $updated_at = null)
+	public function __construct(ApiClient $apiClient, $project_id = null, $name = null, $color = null, $ip_status_id = null, $created_at = null, $updated_at = null)
 	{
 		$this->apiClient = $apiClient;
 		$this->project_id = $project_id;
 		$this->name = $name;
+		$this->color = $color;
 		$this->ip_status_id = $ip_status_id;
 		$this->created_at = $created_at;
 		$this->updated_at = $updated_at;
@@ -76,12 +83,13 @@ class ProjectTag
 	 * 
 	 * @param string $project_id Format: uuid.
 	 * @param string $ip
+	 * @param string $color
 	 * 
 	 * @return ProjectTagResponse
 	 * 
 	 * @throws UnexpectedResponseException
 	 */
-	public function update($project_id, $ip)
+	public function update($project_id, $ip, $color = null)
 	{
 		$routePath = '/api/projectTag/{projectId},{projectTagName}';
 
@@ -95,6 +103,10 @@ class ProjectTag
 		$bodyParameters = [];
 		$bodyParameters['project_id'] = $project_id;
 		$bodyParameters['ip'] = $ip;
+
+		if (!is_null($color)) {
+			$bodyParameters['color'] = $color;
+		}
 
 		$requestOptions = [];
 		$requestOptions['form_params'] = $bodyParameters;
@@ -123,6 +135,7 @@ class ProjectTag
 				$this->apiClient, 
 				$requestBody['data']['project_id'], 
 				$requestBody['data']['name'], 
+				$requestBody['data']['color'], 
 				(isset($requestBody['data']['ip_status_id']) ? $requestBody['data']['ip_status_id'] : null), 
 				$requestBody['data']['created_at'], 
 				$requestBody['data']['updated_at']

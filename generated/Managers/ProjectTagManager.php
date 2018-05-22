@@ -114,6 +114,7 @@ class ProjectTagManager
 					$this->apiClient, 
 					$data['project_id'], 
 					$data['name'], 
+					$data['color'], 
 					(isset($data['ip_status_id']) ? $data['ip_status_id'] : null), 
 					$data['created_at'], 
 					$data['updated_at']
@@ -143,18 +144,23 @@ class ProjectTagManager
 	 * 
 	 * @param string $project_id Format: uuid.
 	 * @param string $name
+	 * @param string $color
 	 * 
 	 * @return ProjectTagResponse
 	 * 
 	 * @throws UnexpectedResponseException
 	 */
-	public function create($project_id, $name)
+	public function create($project_id, $name, $color = null)
 	{
 		$routeUrl = '/api/projectTag';
 
 		$bodyParameters = [];
 		$bodyParameters['project_id'] = $project_id;
 		$bodyParameters['name'] = $name;
+
+		if (!is_null($color)) {
+			$bodyParameters['color'] = $color;
+		}
 
 		$requestOptions = [];
 		$requestOptions['form_params'] = $bodyParameters;
@@ -183,6 +189,7 @@ class ProjectTagManager
 				$this->apiClient, 
 				$requestBody['data']['project_id'], 
 				$requestBody['data']['name'], 
+				$requestBody['data']['color'], 
 				(isset($requestBody['data']['ip_status_id']) ? $requestBody['data']['ip_status_id'] : null), 
 				$requestBody['data']['created_at'], 
 				$requestBody['data']['updated_at']
@@ -241,6 +248,7 @@ class ProjectTagManager
 				$this->apiClient, 
 				$requestBody['data']['project_id'], 
 				$requestBody['data']['name'], 
+				$requestBody['data']['color'], 
 				(isset($requestBody['data']['ip_status_id']) ? $requestBody['data']['ip_status_id'] : null), 
 				$requestBody['data']['created_at'], 
 				$requestBody['data']['updated_at']
@@ -259,12 +267,13 @@ class ProjectTagManager
 	 * @param string $name Name
 	 * @param string $project_id Format: uuid.
 	 * @param string $ip
+	 * @param string $color
 	 * 
 	 * @return ProjectTagResponse
 	 * 
 	 * @throws UnexpectedResponseException
 	 */
-	public function update($projectId, $name, $project_id, $ip)
+	public function update($projectId, $name, $project_id, $ip, $color = null)
 	{
 		$routePath = '/api/projectTag/{projectId},{projectTagName}';
 
@@ -278,6 +287,10 @@ class ProjectTagManager
 		$bodyParameters = [];
 		$bodyParameters['project_id'] = $project_id;
 		$bodyParameters['ip'] = $ip;
+
+		if (!is_null($color)) {
+			$bodyParameters['color'] = $color;
+		}
 
 		$requestOptions = [];
 		$requestOptions['form_params'] = $bodyParameters;
@@ -306,6 +319,7 @@ class ProjectTagManager
 				$this->apiClient, 
 				$requestBody['data']['project_id'], 
 				$requestBody['data']['name'], 
+				$requestBody['data']['color'], 
 				(isset($requestBody['data']['ip_status_id']) ? $requestBody['data']['ip_status_id'] : null), 
 				$requestBody['data']['created_at'], 
 				$requestBody['data']['updated_at']

@@ -494,6 +494,7 @@ class Project
 					$this->apiClient, 
 					$data['project_id'], 
 					$data['name'], 
+					$data['color'], 
 					(isset($data['ip_status_id']) ? $data['ip_status_id'] : null), 
 					$data['created_at'], 
 					$data['updated_at']
@@ -586,6 +587,7 @@ class Project
 					$this->apiClient, 
 					$data['project_id'], 
 					$data['name'], 
+					$data['color'], 
 					(isset($data['ip_status_id']) ? $data['ip_status_id'] : null), 
 					$data['created_at'], 
 					$data['updated_at']
