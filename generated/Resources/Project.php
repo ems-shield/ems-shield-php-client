@@ -381,6 +381,7 @@ class Project
 					$data['ip'], 
 					$data['ip_status_id'], 
 					$data['v6'], 
+					$data['expires_at'], 
 					$data['created_at'], 
 					$data['updated_at']
 				); 

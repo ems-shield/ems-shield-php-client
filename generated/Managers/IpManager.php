@@ -123,6 +123,7 @@ class IpManager
 					$data['ip'], 
 					$data['ip_status_id'], 
 					$data['v6'], 
+					$data['expires_at'], 
 					$data['created_at'], 
 					$data['updated_at']
 				); 
@@ -153,6 +154,7 @@ class IpManager
 	 * @param string $ip
 	 * @param string $ip_status_id
 	 * @param boolean $v6
+	 * @param string $expires_at Must be a valid date according to the strtotime PHP function.
 	 * @param string $log_entry
 	 * @param mixed $tags
 	 * 
@@ -160,7 +162,7 @@ class IpManager
 	 * 
 	 * @throws UnexpectedResponseException
 	 */
-	public function create($project_id, $ip, $ip_status_id, $v6, $log_entry = null, $tags = null)
+	public function create($project_id, $ip, $ip_status_id, $v6, $expires_at = null, $log_entry = null, $tags = null)
 	{
 		$routeUrl = '/api/ip';
 
@@ -169,6 +171,10 @@ class IpManager
 		$bodyParameters['ip'] = $ip;
 		$bodyParameters['ip_status_id'] = $ip_status_id;
 		$bodyParameters['v6'] = $v6;
+
+		if (!is_null($expires_at)) {
+			$bodyParameters['expires_at'] = $expires_at;
+		}
 
 		if (!is_null($log_entry)) {
 			$bodyParameters['log_entry'] = $log_entry;
@@ -207,6 +213,7 @@ class IpManager
 				$requestBody['data']['ip'], 
 				$requestBody['data']['ip_status_id'], 
 				$requestBody['data']['v6'], 
+				$requestBody['data']['expires_at'], 
 				$requestBody['data']['created_at'], 
 				$requestBody['data']['updated_at']
 			)
@@ -266,6 +273,7 @@ class IpManager
 				$requestBody['data']['ip'], 
 				$requestBody['data']['ip_status_id'], 
 				$requestBody['data']['v6'], 
+				$requestBody['data']['expires_at'], 
 				$requestBody['data']['created_at'], 
 				$requestBody['data']['updated_at']
 			)
@@ -284,6 +292,7 @@ class IpManager
 	 * @param string $project_id Format: uuid.
 	 * @param string $ip_status_id
 	 * @param boolean $v6
+	 * @param string $expires_at Must be a valid date according to the strtotime PHP function.
 	 * @param string $log_entry
 	 * @param mixed $tags
 	 * 
@@ -291,7 +300,7 @@ class IpManager
 	 * 
 	 * @throws UnexpectedResponseException
 	 */
-	public function update($projectId, $ip, $project_id, $ip_status_id, $v6, $log_entry = null, $tags = null)
+	public function update($projectId, $ip, $project_id, $ip_status_id, $v6, $expires_at = null, $log_entry = null, $tags = null)
 	{
 		$routePath = '/api/ip/{projectId},{ip}';
 
@@ -307,6 +316,10 @@ class IpManager
 		$bodyParameters['ip'] = $ip;
 		$bodyParameters['ip_status_id'] = $ip_status_id;
 		$bodyParameters['v6'] = $v6;
+
+		if (!is_null($expires_at)) {
+			$bodyParameters['expires_at'] = $expires_at;
+		}
 
 		if (!is_null($log_entry)) {
 			$bodyParameters['log_entry'] = $log_entry;
@@ -345,6 +358,7 @@ class IpManager
 				$requestBody['data']['ip'], 
 				$requestBody['data']['ip_status_id'], 
 				$requestBody['data']['v6'], 
+				$requestBody['data']['expires_at'], 
 				$requestBody['data']['created_at'], 
 				$requestBody['data']['updated_at']
 			)

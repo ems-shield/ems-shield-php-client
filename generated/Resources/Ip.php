@@ -48,6 +48,13 @@ class Ip
 	 * 
 	 * @var string
 	 */
+	public $expires_at;
+
+	/**
+	 * Format: date-time.
+	 * 
+	 * @var string
+	 */
 	public $created_at;
 
 	/**
@@ -65,16 +72,18 @@ class Ip
 	 * @param string $ip Format: ip.
 	 * @param string $ip_status_id
 	 * @param boolean $v6
+	 * @param string $expires_at Format: date-time.
 	 * @param string $created_at Format: date-time.
 	 * @param string $updated_at Format: date-time.
 	 */
-	public function __construct(ApiClient $apiClient, $project_id = null, $ip = null, $ip_status_id = null, $v6 = null, $created_at = null, $updated_at = null)
+	public function __construct(ApiClient $apiClient, $project_id = null, $ip = null, $ip_status_id = null, $v6 = null, $expires_at = null, $created_at = null, $updated_at = null)
 	{
 		$this->apiClient = $apiClient;
 		$this->project_id = $project_id;
 		$this->ip = $ip;
 		$this->ip_status_id = $ip_status_id;
 		$this->v6 = $v6;
+		$this->expires_at = $expires_at;
 		$this->created_at = $created_at;
 		$this->updated_at = $updated_at;
 	}
@@ -87,6 +96,7 @@ class Ip
 	 * @param string $ip
 	 * @param string $ip_status_id
 	 * @param boolean $v6
+	 * @param string $expires_at Must be a valid date according to the strtotime PHP function.
 	 * @param string $log_entry
 	 * @param mixed $tags
 	 * 
@@ -94,7 +104,7 @@ class Ip
 	 * 
 	 * @throws UnexpectedResponseException
 	 */
-	public function update($project_id, $ip, $ip_status_id, $v6, $log_entry = null, $tags = null)
+	public function update($project_id, $ip, $ip_status_id, $v6, $expires_at = null, $log_entry = null, $tags = null)
 	{
 		$routePath = '/api/ip/{projectId},{ip}';
 
@@ -110,6 +120,10 @@ class Ip
 		$bodyParameters['ip'] = $ip;
 		$bodyParameters['ip_status_id'] = $ip_status_id;
 		$bodyParameters['v6'] = $v6;
+
+		if (!is_null($expires_at)) {
+			$bodyParameters['expires_at'] = $expires_at;
+		}
 
 		if (!is_null($log_entry)) {
 			$bodyParameters['log_entry'] = $log_entry;
@@ -148,6 +162,7 @@ class Ip
 				$requestBody['data']['ip'], 
 				$requestBody['data']['ip_status_id'], 
 				$requestBody['data']['v6'], 
+				$requestBody['data']['expires_at'], 
 				$requestBody['data']['created_at'], 
 				$requestBody['data']['updated_at']
 			)
