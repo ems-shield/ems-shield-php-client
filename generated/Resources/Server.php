@@ -6,11 +6,11 @@ use EmsShield\Api\ApiClient;
 use EmsShield\Api\Exceptions\UnexpectedResponseException;
 
 /**
- * User resource class
+ * Server resource class
  * 
  * @package EmsShield\Api\Resources
  */
-class User 
+class Server 
 {
 	/**
 	 * API client
@@ -31,7 +31,14 @@ class User
 	 * 
 	 * @var string
 	 */
-	public $user_group_id;
+	public $project_id;
+
+	/**
+	 * Format: uuid.
+	 * 
+	 * @var string
+	 */
+	public $user_id;
 
 	/**
 	 * @var string
@@ -39,23 +46,33 @@ class User
 	public $name;
 
 	/**
-	 * Format: email.
-	 * 
 	 * @var string
 	 */
-	public $email;
+	public $ip;
 
 	/**
-	 * Format: password.
+	 * Format: int32.
 	 * 
-	 * @var string
+	 * @var int
 	 */
-	public $password;
+	public $port;
 
 	/**
 	 * @var string
 	 */
-	public $preferred_language;
+	public $login;
+
+	/**
+	 * @var boolean
+	 */
+	public $enabled;
+
+	/**
+	 * Format: int32.
+	 * 
+	 * @var int
+	 */
+	public $position;
 
 	/**
 	 * Format: date-time.
@@ -72,63 +89,76 @@ class User
 	public $updated_at;
 
 	/**
-	 * User resource class constructor
+	 * Server resource class constructor
 	 * 
 	 * @param ApiClient $apiClient API Client to use for this manager requests
 	 * @param string $id Format: uuid.
-	 * @param string $user_group_id Format: uuid.
+	 * @param string $project_id Format: uuid.
+	 * @param string $user_id Format: uuid.
 	 * @param string $name
-	 * @param string $email Format: email.
-	 * @param string $password Format: password.
-	 * @param string $preferred_language
+	 * @param string $ip
+	 * @param int $port Format: int32.
+	 * @param string $login
+	 * @param boolean $enabled
+	 * @param int $position Format: int32.
 	 * @param string $created_at Format: date-time.
 	 * @param string $updated_at Format: date-time.
 	 */
-	public function __construct(ApiClient $apiClient, $id = null, $user_group_id = null, $name = null, $email = null, $password = null, $preferred_language = null, $created_at = null, $updated_at = null)
+	public function __construct(ApiClient $apiClient, $id = null, $project_id = null, $user_id = null, $name = null, $ip = null, $port = null, $login = null, $enabled = null, $position = null, $created_at = null, $updated_at = null)
 	{
 		$this->apiClient = $apiClient;
 		$this->id = $id;
-		$this->user_group_id = $user_group_id;
+		$this->project_id = $project_id;
+		$this->user_id = $user_id;
 		$this->name = $name;
-		$this->email = $email;
-		$this->password = $password;
-		$this->preferred_language = $preferred_language;
+		$this->ip = $ip;
+		$this->port = $port;
+		$this->login = $login;
+		$this->enabled = $enabled;
+		$this->position = $position;
 		$this->created_at = $created_at;
 		$this->updated_at = $updated_at;
 	}
 	/**
-	 * Update a specified user
+	 * Update a specified server
 	 * 
 	 * Excepted HTTP code : 200
 	 * 
-	 * @param string $user_group_id
+	 * @param string $project_id Format: uuid.
 	 * @param string $name
-	 * @param string $email Format: email.
-	 * @param string $password Format: password.
-	 * @param string $preferred_language
+	 * @param string $ip
+	 * @param string $login
+	 * @param boolean $enabled
+	 * @param mixed $port
+	 * @param mixed $position
 	 * 
-	 * @return UserResponse
+	 * @return ServerResponse
 	 * 
 	 * @throws UnexpectedResponseException
 	 */
-	public function update($user_group_id, $name, $email, $password, $preferred_language = null)
+	public function update($project_id, $name, $ip, $login, $enabled, $port = null, $position = null)
 	{
-		$routePath = '/api/user/{userId}';
+		$routePath = '/api/server/{serverId}';
 
 		$pathReplacements = [
-			'{userId}' => $this->id,
+			'{serverId}' => $this->id,
 		];
 
 		$routeUrl = str_replace(array_keys($pathReplacements), array_values($pathReplacements), $routePath);
 
 		$bodyParameters = [];
-		$bodyParameters['user_group_id'] = $user_group_id;
+		$bodyParameters['project_id'] = $project_id;
 		$bodyParameters['name'] = $name;
-		$bodyParameters['email'] = $email;
-		$bodyParameters['password'] = $password;
+		$bodyParameters['ip'] = $ip;
+		$bodyParameters['login'] = $login;
+		$bodyParameters['enabled'] = $enabled;
 
-		if (!is_null($preferred_language)) {
-			$bodyParameters['preferred_language'] = $preferred_language;
+		if (!is_null($port)) {
+			$bodyParameters['port'] = $port;
+		}
+
+		if (!is_null($position)) {
+			$bodyParameters['position'] = $position;
 		}
 
 		$requestOptions = [];
@@ -152,16 +182,19 @@ class User
 
 		$requestBody = json_decode((string) $request->getBody(), true);
 
-		$response = new UserResponse(
+		$response = new ServerResponse(
 			$this->apiClient, 
-			new User(
+			new Server(
 				$this->apiClient, 
 				$requestBody['data']['id'], 
-				$requestBody['data']['user_group_id'], 
+				$requestBody['data']['project_id'], 
+				$requestBody['data']['user_id'], 
 				$requestBody['data']['name'], 
-				$requestBody['data']['email'], 
-				(isset($requestBody['data']['password']) ? $requestBody['data']['password'] : null), 
-				$requestBody['data']['preferred_language'], 
+				$requestBody['data']['ip'], 
+				$requestBody['data']['port'], 
+				(isset($requestBody['data']['login']) ? $requestBody['data']['login'] : null), 
+				$requestBody['data']['enabled'], 
+				$requestBody['data']['position'], 
 				$requestBody['data']['created_at'], 
 				$requestBody['data']['updated_at']
 			)
@@ -171,7 +204,7 @@ class User
 	}
 	
 	/**
-	 * Delete specified user
+	 * Delete specified server
 	 * 
 	 * Excepted HTTP code : 204
 	 * 
@@ -181,10 +214,10 @@ class User
 	 */
 	public function delete()
 	{
-		$routePath = '/api/user/{userId}';
+		$routePath = '/api/server/{serverId}';
 
 		$pathReplacements = [
-			'{userId}' => $this->id,
+			'{serverId}' => $this->id,
 		];
 
 		$routeUrl = str_replace(array_keys($pathReplacements), array_values($pathReplacements), $routePath);
@@ -221,112 +254,7 @@ class User
 	}
 	
 	/**
-	 * User project list
-	 * 
-	 * You can specify a GET parameter `user_role_id` to filter results.
-	 * 
-	 * Excepted HTTP code : 200
-	 * 
-	 * @param string $user_role_id
-	 * @param string $include Include responses : {include1},{include2,{include3}[...]
-	 * @param string $search Search words
-	 * @param int $page Format: int32. Pagination : Page number
-	 * @param int $limit Format: int32. Pagination : Maximum entries per page
-	 * @param string $order_by Order by : {field},[asc|desc]
-	 * 
-	 * @return ProjectListResponse
-	 * 
-	 * @throws UnexpectedResponseException
-	 */
-	public function index($user_role_id = null, $include = null, $search = null, $page = null, $limit = null, $order_by = null)
-	{
-		$routePath = '/api/user/{userId}/project';
-
-		$pathReplacements = [
-			'{userId}' => $this->id,
-		];
-
-		$routeUrl = str_replace(array_keys($pathReplacements), array_values($pathReplacements), $routePath);
-
-		$queryParameters = [];
-
-		if (!is_null($user_role_id)) {
-			$queryParameters['user_role_id'] = $user_role_id;
-		}
-
-		if (!is_null($include)) {
-			$queryParameters['include'] = $include;
-		}
-
-		if (!is_null($search)) {
-			$queryParameters['search'] = $search;
-		}
-
-		if (!is_null($page)) {
-			$queryParameters['page'] = $page;
-		}
-
-		if (!is_null($limit)) {
-			$queryParameters['limit'] = $limit;
-		}
-
-		if (!is_null($order_by)) {
-			$queryParameters['order_by'] = $order_by;
-		}
-
-		$requestOptions = [];
-		$requestOptions['query'] = $queryParameters;
-
-		$request = $this->apiClient->getHttpClient()->request('get', $routeUrl, $requestOptions);
-
-		if ($request->getStatusCode() != 200) {
-			$requestBody = json_decode((string) $request->getBody(), true);
-
-			$apiExceptionResponse = new ErrorResponse(
-				$this->apiClient, 
-				$requestBody['message'], 
-				(isset($requestBody['errors']) ? $requestBody['errors'] : null), 
-				(isset($requestBody['status_code']) ? $requestBody['status_code'] : null), 
-				(isset($requestBody['debug']) ? $requestBody['debug'] : null)
-			);
-
-			throw new UnexpectedResponseException($request->getStatusCode(), 200, $request, $apiExceptionResponse);
-		}
-
-		$requestBody = json_decode((string) $request->getBody(), true);
-
-		$response = new ProjectListResponse(
-			$this->apiClient, 
-			array_map(function($data) {
-				return new Project(
-					$this->apiClient, 
-					$data['id'], 
-					$data['name'], 
-					$data['public_key'], 
-					$data['last_run_at'], 
-					$data['created_at'], 
-					$data['updated_at']
-				); 
-			}, $requestBody['data']), 
-			new Meta(
-				$this->apiClient, 
-				((isset($requestBody['meta']['pagination']) && !is_null($requestBody['meta']['pagination'])) ? (new Pagination(
-					$this->apiClient, 
-					$requestBody['meta']['pagination']['total'], 
-					$requestBody['meta']['pagination']['count'], 
-					$requestBody['meta']['pagination']['per_page'], 
-					$requestBody['meta']['pagination']['current_page'], 
-					$requestBody['meta']['pagination']['total_pages'], 
-					$requestBody['meta']['pagination']['links']
-				)) : null)
-			)
-		);
-
-		return $response;
-	}
-	
-	/**
-	 * User ip logs list
+	 * Show server server log list
 	 * 
 	 * Excepted HTTP code : 200
 	 * 
@@ -335,16 +263,16 @@ class User
 	 * @param int $limit Format: int32. Pagination : Maximum entries per page
 	 * @param string $order_by Order by : {field},[asc|desc]
 	 * 
-	 * @return IpLogListResponse
+	 * @return ServerLogListResponse
 	 * 
 	 * @throws UnexpectedResponseException
 	 */
-	public function getIpLogs($search = null, $page = null, $limit = null, $order_by = null)
+	public function getServerLogs($search = null, $page = null, $limit = null, $order_by = null)
 	{
-		$routePath = '/api/user/{userId}/ipLog';
+		$routePath = '/api/server/{serverId}/serverLog';
 
 		$pathReplacements = [
-			'{userId}' => $this->id,
+			'{serverId}' => $this->id,
 		];
 
 		$routeUrl = str_replace(array_keys($pathReplacements), array_values($pathReplacements), $routePath);
@@ -388,18 +316,19 @@ class User
 
 		$requestBody = json_decode((string) $request->getBody(), true);
 
-		$response = new IpLogListResponse(
+		$response = new ServerLogListResponse(
 			$this->apiClient, 
 			array_map(function($data) {
-				return new IpLog(
+				return new ServerLog(
 					$this->apiClient, 
 					$data['id'], 
-					$data['project_id'], 
-					$data['ip'], 
-					$data['ip_status_id'], 
-					$data['user_id'], 
-					$data['entry'], 
+					$data['server_id'], 
+					$data['deploy_task_id'], 
+					$data['status'], 
+					$data['output'], 
 					$data['position'], 
+					$data['started_at'], 
+					$data['finished_at'], 
 					$data['created_at'], 
 					$data['updated_at']
 				); 

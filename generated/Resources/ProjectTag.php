@@ -464,6 +464,8 @@ class ProjectTag
 					$this->apiClient, 
 					$data['id'], 
 					$data['name'], 
+					$data['public_key'], 
+					$data['last_run_at'], 
 					$data['created_at'], 
 					$data['updated_at']
 				); 

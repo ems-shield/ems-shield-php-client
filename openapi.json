@@ -4746,6 +4746,874 @@
                     }
                 }
             }
+        },
+        "\/api\/server": {
+            "get": {
+                "tags": [
+                    "Manager:Server"
+                ],
+                "summary": "Show server list",
+                "operationId": "all",
+                "parameters": [
+                    {
+                        "$ref": "#\/components\/parameters\/Include"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Search"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationPage"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationLimit"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/OrderBy"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A Server list",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ServerListResponse"
+                                },
+                                "example": {
+                                    "$ref": "#\/components\/examples\/ServerIndexExampleResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Manager:Server"
+                ],
+                "summary": "Create and store a new server",
+                "operationId": "create",
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "required": [
+                                    "project_id",
+                                    "name",
+                                    "ip",
+                                    "login",
+                                    "enabled"
+                                ],
+                                "properties": {
+                                    "project_id": {
+                                        "type": "string",
+                                        "format": "uuid"
+                                    },
+                                    "name": {
+                                        "maxLength": 191,
+                                        "type": "string"
+                                    },
+                                    "ip": {
+                                        "maxLength": 39,
+                                        "type": "string"
+                                    },
+                                    "port": [],
+                                    "login": {
+                                        "maxLength": 191,
+                                        "type": "string"
+                                    },
+                                    "enabled": {
+                                        "type": "boolean"
+                                    },
+                                    "position": []
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "The created Server",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ServerResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/server\/{serverId}": {
+            "get": {
+                "tags": [
+                    "Manager:Server"
+                ],
+                "summary": "Get specified server",
+                "operationId": "get",
+                "parameters": [
+                    {
+                        "name": "serverId",
+                        "in": "path",
+                        "description": "Server UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A Server",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ServerResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Manager:Server",
+                    "Resource:Server"
+                ],
+                "summary": "Update a specified server",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "serverId",
+                        "in": "path",
+                        "description": "Server UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "required": [
+                                    "project_id",
+                                    "name",
+                                    "ip",
+                                    "login",
+                                    "enabled"
+                                ],
+                                "properties": {
+                                    "project_id": {
+                                        "type": "string",
+                                        "format": "uuid"
+                                    },
+                                    "name": {
+                                        "maxLength": 191,
+                                        "type": "string"
+                                    },
+                                    "ip": {
+                                        "maxLength": 39,
+                                        "type": "string"
+                                    },
+                                    "port": [],
+                                    "login": {
+                                        "maxLength": 191,
+                                        "type": "string"
+                                    },
+                                    "enabled": {
+                                        "type": "boolean"
+                                    },
+                                    "position": []
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The updated Server",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ServerResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Manager:Server",
+                    "Resource:Server"
+                ],
+                "summary": "Delete specified server",
+                "operationId": "delete",
+                "parameters": [
+                    {
+                        "name": "serverId",
+                        "in": "path",
+                        "description": "Server UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Empty response"
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Manager:Server",
+                    "Resource:Server"
+                ],
+                "summary": "Update a specified server",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "serverId",
+                        "in": "path",
+                        "description": "Server UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "required": [
+                                    "project_id",
+                                    "name",
+                                    "ip",
+                                    "login",
+                                    "enabled"
+                                ],
+                                "properties": {
+                                    "project_id": {
+                                        "type": "string",
+                                        "format": "uuid"
+                                    },
+                                    "name": {
+                                        "maxLength": 191,
+                                        "type": "string"
+                                    },
+                                    "ip": {
+                                        "maxLength": 39,
+                                        "type": "string"
+                                    },
+                                    "port": [],
+                                    "login": {
+                                        "maxLength": 191,
+                                        "type": "string"
+                                    },
+                                    "enabled": {
+                                        "type": "boolean"
+                                    },
+                                    "position": []
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The updated Server",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ServerResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/project\/{projectId}\/server": {
+            "get": {
+                "tags": [
+                    "Resource:Project"
+                ],
+                "summary": "Show project server list",
+                "operationId": "getServers",
+                "parameters": [
+                    {
+                        "name": "projectId",
+                        "in": "path",
+                        "description": "Project ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Search"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationPage"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationLimit"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/OrderBy"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A server list",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ServerListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/serverLog": {
+            "get": {
+                "tags": [
+                    "Manager:ServerLog"
+                ],
+                "summary": "Show server log list",
+                "operationId": "all",
+                "parameters": [
+                    {
+                        "$ref": "#\/components\/parameters\/Include"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Search"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationPage"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationLimit"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/OrderBy"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A ServerLog list",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ServerLogListResponse"
+                                },
+                                "example": {
+                                    "$ref": "#\/components\/examples\/ServerLogIndexExampleResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/serverLog\/{serverLogId}": {
+            "get": {
+                "tags": [
+                    "Manager:ServerLog"
+                ],
+                "summary": "Get specified server log",
+                "operationId": "get",
+                "parameters": [
+                    {
+                        "name": "serverLogId",
+                        "in": "path",
+                        "description": "Server Log UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A ServerLog",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ServerLogResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Manager:ServerLog",
+                    "Resource:ServerLog"
+                ],
+                "summary": "Delete specified server log",
+                "operationId": "delete",
+                "parameters": [
+                    {
+                        "name": "serverLogId",
+                        "in": "path",
+                        "description": "Server Log UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Empty response"
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/server\/{serverId}\/serverLog": {
+            "get": {
+                "tags": [
+                    "Resource:Server"
+                ],
+                "summary": "Show server server log list",
+                "operationId": "getServerLogs",
+                "parameters": [
+                    {
+                        "name": "serverId",
+                        "in": "path",
+                        "description": "Server ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Search"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationPage"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationLimit"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/OrderBy"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A server log list",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ServerLogListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/deployTask": {
+            "get": {
+                "tags": [
+                    "Manager:DeployTask"
+                ],
+                "summary": "Show deploy task list",
+                "operationId": "all",
+                "parameters": [
+                    {
+                        "$ref": "#\/components\/parameters\/Include"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Search"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationPage"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationLimit"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/OrderBy"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A DeployTask list",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/DeployTaskListResponse"
+                                },
+                                "example": {
+                                    "$ref": "#\/components\/examples\/DeployTaskIndexExampleResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Manager:DeployTask"
+                ],
+                "summary": "Create and store a new deploy task",
+                "operationId": "create",
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "required": [
+                                    "project_id"
+                                ],
+                                "properties": {
+                                    "project_id": {
+                                        "type": "string",
+                                        "format": "uuid"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "The created DeployTask",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/DeployTaskResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/deployTask\/{deployTaskId}": {
+            "get": {
+                "tags": [
+                    "Manager:DeployTask"
+                ],
+                "summary": "Get specified deploy task",
+                "operationId": "get",
+                "parameters": [
+                    {
+                        "name": "deployTaskId",
+                        "in": "path",
+                        "description": "Deploy Task UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A DeployTask",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/DeployTaskResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Manager:DeployTask",
+                    "Resource:DeployTask"
+                ],
+                "summary": "Delete specified deploy task",
+                "operationId": "delete",
+                "parameters": [
+                    {
+                        "name": "deployTaskId",
+                        "in": "path",
+                        "description": "Deploy Task UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Empty response"
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/project\/{projectId}\/deployTask": {
+            "get": {
+                "tags": [
+                    "Resource:Project"
+                ],
+                "summary": "Show project deploy task list",
+                "operationId": "getServers",
+                "parameters": [
+                    {
+                        "name": "projectId",
+                        "in": "path",
+                        "description": "Project ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Search"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationPage"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationLimit"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/OrderBy"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A deploy task list",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/DeployTaskListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/deployTask\/{deployTaskId}\/serverLog": {
+            "get": {
+                "tags": [
+                    "Resource:DeployTask"
+                ],
+                "summary": "Show deploy task server log list",
+                "operationId": "getServerLogs",
+                "parameters": [
+                    {
+                        "name": "deployTaskId",
+                        "in": "path",
+                        "description": "Deploy Task ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Search"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationPage"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/PaginationLimit"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/OrderBy"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A server log list",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ServerLogListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -5099,6 +5967,8 @@
                 "required": [
                     "id",
                     "name",
+                    "public_key",
+                    "last_run_at",
                     "created_at",
                     "updated_at"
                 ],
@@ -5109,6 +5979,13 @@
                     },
                     "name": {
                         "type": "string"
+                    },
+                    "public_key": {
+                        "type": "string"
+                    },
+                    "last_run_at": {
+                        "type": "string",
+                        "format": "date-time"
                     },
                     "created_at": {
                         "type": "string",
@@ -5145,9 +6022,6 @@
                     "meta": {
                         "$ref": "#\/components\/schemas\/Meta"
                     }
-                },
-                "example": {
-                    "$ref": "#\/components\/examples\/ProjectIndexExampleResponse"
                 }
             },
             "UserHasProject": {
@@ -5570,6 +6444,260 @@
                         "$ref": "#\/components\/schemas\/Meta"
                     }
                 }
+            },
+            "Server": {
+                "required": [
+                    "id",
+                    "project_id",
+                    "user_id",
+                    "name",
+                    "ip",
+                    "port",
+                    "enabled",
+                    "position",
+                    "created_at",
+                    "updated_at"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "project_id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "user_id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "ip": {
+                        "type": "string"
+                    },
+                    "port": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "login": {
+                        "type": "string"
+                    },
+                    "enabled": {
+                        "type": "boolean"
+                    },
+                    "position": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "ServerResponse": {
+                "required": [
+                    "data"
+                ],
+                "properties": {
+                    "data": {
+                        "$ref": "#\/components\/schemas\/Server"
+                    }
+                }
+            },
+            "ServerListResponse": {
+                "required": [
+                    "data",
+                    "meta"
+                ],
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/Server"
+                        }
+                    },
+                    "meta": {
+                        "$ref": "#\/components\/schemas\/Meta"
+                    }
+                }
+            },
+            "ServerLog": {
+                "required": [
+                    "id",
+                    "server_id",
+                    "deploy_task_id",
+                    "status",
+                    "output",
+                    "position",
+                    "started_at",
+                    "finished_at",
+                    "created_at",
+                    "updated_at"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "server_id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "deploy_task_id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "status": {
+                        "enum": [
+                            "COMPLETED",
+                            "PENDING",
+                            "RUNNING",
+                            "FAILED",
+                            "CANCELLED"
+                        ],
+                        "type": "string"
+                    },
+                    "output": {
+                        "type": "string"
+                    },
+                    "position": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "started_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "finished_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "ServerLogResponse": {
+                "required": [
+                    "data"
+                ],
+                "properties": {
+                    "data": {
+                        "$ref": "#\/components\/schemas\/ServerLog"
+                    }
+                }
+            },
+            "ServerLogListResponse": {
+                "required": [
+                    "data",
+                    "meta"
+                ],
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/ServerLog"
+                        }
+                    },
+                    "meta": {
+                        "$ref": "#\/components\/schemas\/Meta"
+                    }
+                }
+            },
+            "DeployTask": {
+                "required": [
+                    "id",
+                    "project_id",
+                    "user_id",
+                    "status",
+                    "output",
+                    "started_at",
+                    "finished_at",
+                    "created_at",
+                    "updated_at"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "project_id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "user_id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "status": {
+                        "enum": [
+                            "COMPLETED",
+                            "PENDING",
+                            "RUNNING",
+                            "FAILED",
+                            "CANCELLED"
+                        ],
+                        "type": "string"
+                    },
+                    "output": {
+                        "type": "string"
+                    },
+                    "started_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "finished_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "DeployTaskResponse": {
+                "required": [
+                    "data"
+                ],
+                "properties": {
+                    "data": {
+                        "$ref": "#\/components\/schemas\/DeployTask"
+                    }
+                }
+            },
+            "DeployTaskListResponse": {
+                "required": [
+                    "data",
+                    "meta"
+                ],
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/DeployTask"
+                        }
+                    },
+                    "meta": {
+                        "$ref": "#\/components\/schemas\/Meta"
+                    }
+                }
             }
         },
         "parameters": {
@@ -5633,8 +6761,8 @@
                         "name": "John Doe",
                         "email": "john.doe@domain.tld",
                         "preferred_language": "en",
-                        "created_at": "2018-05-23 12:06:42",
-                        "updated_at": "2018-05-23 12:06:42"
+                        "created_at": "2018-06-08 12:36:17",
+                        "updated_at": "2018-06-08 12:36:17"
                     }
                 }
             },
@@ -5642,70 +6770,7 @@
                 "value": {
                     "data": [
                         {
-                            "id": "0cf96721-437c-4d71-befe-32574f0ab6cd",
-                            "type": "App\\Notifications\\UserCreatedNotification",
-                            "notifiable_id": "41abdec2-1389-11e7-93ae-92361f002671",
-                            "notifiable_type": "App\\Models\\User",
-                            "data": {
-                                "user_id": "509dd5c0-1389-11e7-93ae-92361f002671",
-                                "user": {
-                                    "name": "Alan Smithee",
-                                    "email": "alan.smithee@domain.tld",
-                                    "created_at": {
-                                        "date": "2018-05-23 12:06:42.000000",
-                                        "timezone_type": 3,
-                                        "timezone": "UTC"
-                                    }
-                                }
-                            },
-                            "read_at": null,
-                            "created_at": "2018-05-23 12:06:42",
-                            "updated_at": "2018-05-23 12:06:42"
-                        },
-                        {
-                            "id": "d818f059-0531-4f4c-b0bc-950df18134d5",
-                            "type": "App\\Notifications\\UserCreatedNotification",
-                            "notifiable_id": "41abdec2-1389-11e7-93ae-92361f002671",
-                            "notifiable_type": "App\\Models\\User",
-                            "data": {
-                                "user_id": "82b5da82-138c-11e7-93ae-92361f002671",
-                                "user": {
-                                    "name": "Mickey Mouse",
-                                    "email": "mickey.mouse@domain.tld",
-                                    "created_at": {
-                                        "date": "2018-05-23 12:06:42.000000",
-                                        "timezone_type": 3,
-                                        "timezone": "UTC"
-                                    }
-                                }
-                            },
-                            "read_at": null,
-                            "created_at": "2018-05-23 12:06:42",
-                            "updated_at": "2018-05-23 12:06:42"
-                        },
-                        {
-                            "id": "e6777780-4d31-4985-9a4f-05faa0fc47a0",
-                            "type": "App\\Notifications\\UserCreatedNotification",
-                            "notifiable_id": "41abdec2-1389-11e7-93ae-92361f002671",
-                            "notifiable_type": "App\\Models\\User",
-                            "data": {
-                                "user_id": "605c7610-1389-11e7-93ae-92361f002671",
-                                "user": {
-                                    "name": "John Smith",
-                                    "email": "john.smith@domain.tld",
-                                    "created_at": {
-                                        "date": "2018-05-23 12:06:42.000000",
-                                        "timezone_type": 3,
-                                        "timezone": "UTC"
-                                    }
-                                }
-                            },
-                            "read_at": null,
-                            "created_at": "2018-05-23 12:06:42",
-                            "updated_at": "2018-05-23 12:06:42"
-                        },
-                        {
-                            "id": "eb2a3479-5adc-4763-9f9d-13f535631717",
+                            "id": "00d50e8f-e78b-4351-9368-a65fb2ba0510",
                             "type": "App\\Notifications\\UserCreatedNotification",
                             "notifiable_id": "41abdec2-1389-11e7-93ae-92361f002671",
                             "notifiable_type": "App\\Models\\User",
@@ -5715,15 +6780,78 @@
                                     "name": "John Doe",
                                     "email": "john.doe@domain.tld",
                                     "created_at": {
-                                        "date": "2018-05-23 12:06:42.000000",
+                                        "date": "2018-06-08 12:36:17.000000",
                                         "timezone_type": 3,
                                         "timezone": "UTC"
                                     }
                                 }
                             },
                             "read_at": null,
-                            "created_at": "2018-05-23 12:06:42",
-                            "updated_at": "2018-05-23 12:06:42"
+                            "created_at": "2018-06-08 12:36:17",
+                            "updated_at": "2018-06-08 12:36:17"
+                        },
+                        {
+                            "id": "7c5e7579-ce87-44b8-8553-2f3cd73c103d",
+                            "type": "App\\Notifications\\UserCreatedNotification",
+                            "notifiable_id": "41abdec2-1389-11e7-93ae-92361f002671",
+                            "notifiable_type": "App\\Models\\User",
+                            "data": {
+                                "user_id": "509dd5c0-1389-11e7-93ae-92361f002671",
+                                "user": {
+                                    "name": "Alan Smithee",
+                                    "email": "alan.smithee@domain.tld",
+                                    "created_at": {
+                                        "date": "2018-06-08 12:36:17.000000",
+                                        "timezone_type": 3,
+                                        "timezone": "UTC"
+                                    }
+                                }
+                            },
+                            "read_at": null,
+                            "created_at": "2018-06-08 12:36:17",
+                            "updated_at": "2018-06-08 12:36:17"
+                        },
+                        {
+                            "id": "95679de7-dd0c-4621-893f-d6383f520287",
+                            "type": "App\\Notifications\\UserCreatedNotification",
+                            "notifiable_id": "41abdec2-1389-11e7-93ae-92361f002671",
+                            "notifiable_type": "App\\Models\\User",
+                            "data": {
+                                "user_id": "605c7610-1389-11e7-93ae-92361f002671",
+                                "user": {
+                                    "name": "John Smith",
+                                    "email": "john.smith@domain.tld",
+                                    "created_at": {
+                                        "date": "2018-06-08 12:36:17.000000",
+                                        "timezone_type": 3,
+                                        "timezone": "UTC"
+                                    }
+                                }
+                            },
+                            "read_at": null,
+                            "created_at": "2018-06-08 12:36:17",
+                            "updated_at": "2018-06-08 12:36:17"
+                        },
+                        {
+                            "id": "9b8fbc70-1ab9-4925-88bf-eb78023751db",
+                            "type": "App\\Notifications\\UserCreatedNotification",
+                            "notifiable_id": "41abdec2-1389-11e7-93ae-92361f002671",
+                            "notifiable_type": "App\\Models\\User",
+                            "data": {
+                                "user_id": "82b5da82-138c-11e7-93ae-92361f002671",
+                                "user": {
+                                    "name": "Mickey Mouse",
+                                    "email": "mickey.mouse@domain.tld",
+                                    "created_at": {
+                                        "date": "2018-06-08 12:36:17.000000",
+                                        "timezone_type": 3,
+                                        "timezone": "UTC"
+                                    }
+                                }
+                            },
+                            "read_at": null,
+                            "created_at": "2018-06-08 12:36:17",
+                            "updated_at": "2018-06-08 12:36:17"
                         }
                     ],
                     "meta": {
@@ -5790,8 +6918,8 @@
                             "name": "John Doe",
                             "email": "john.doe@domain.tld",
                             "preferred_language": "en",
-                            "created_at": "2018-05-23 12:06:42",
-                            "updated_at": "2018-05-23 12:06:42"
+                            "created_at": "2018-06-08 12:36:17",
+                            "updated_at": "2018-06-08 12:36:17"
                         },
                         {
                             "id": "509dd5c0-1389-11e7-93ae-92361f002671",
@@ -5799,8 +6927,8 @@
                             "name": "Alan Smithee",
                             "email": "alan.smithee@domain.tld",
                             "preferred_language": "fr",
-                            "created_at": "2018-05-23 12:06:42",
-                            "updated_at": "2018-05-23 12:06:42"
+                            "created_at": "2018-06-08 12:36:17",
+                            "updated_at": "2018-06-08 12:36:17"
                         },
                         {
                             "id": "605c7610-1389-11e7-93ae-92361f002671",
@@ -5808,8 +6936,8 @@
                             "name": "John Smith",
                             "email": "john.smith@domain.tld",
                             "preferred_language": "en",
-                            "created_at": "2018-05-23 12:06:42",
-                            "updated_at": "2018-05-23 12:06:42"
+                            "created_at": "2018-06-08 12:36:17",
+                            "updated_at": "2018-06-08 12:36:17"
                         },
                         {
                             "id": "82b5da82-138c-11e7-93ae-92361f002671",
@@ -5817,8 +6945,8 @@
                             "name": "Mickey Mouse",
                             "email": "mickey.mouse@domain.tld",
                             "preferred_language": "fr",
-                            "created_at": "2018-05-23 12:06:42",
-                            "updated_at": "2018-05-23 12:06:42"
+                            "created_at": "2018-06-08 12:36:17",
+                            "updated_at": "2018-06-08 12:36:17"
                         }
                     ],
                     "meta": {
@@ -5897,8 +7025,10 @@
                         {
                             "id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "name": "Sample Project",
-                            "created_at": "2018-05-23 12:06:42",
-                            "updated_at": "2018-05-23 12:06:42"
+                            "public_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDpqrI6U9g1jEUlBXoa8daFcQ1ksfcKDB7gHrU1mjAhxGJQT2tkKAs2HIsmP3ixw9v7FfHv0t\/SWA0SDlQkPQitBq9fizahNrw5DhIYjnoRx2Tzc0G7koZyxxdG4ppfnr7\/s5gOGWt2U7HWh2QKP9Vd\/BeGTgqx3\/ubyD8KjemIJeWJWrNQbhw4W2nGmupj05zLxk9aUCIS9Azk1TPI4R7N\/AQGY2Pr5ue\/YXBa0syJgcXINrrsfJ+9s9bFzuCos6itn9IbWiSgbxQbdRcjZsVbziC+KYIODVCL0HtDWrlW9FvKu9rkIQ52TutX5EBwOwfdoDRDSprunwtaNX1XMJk7 worker@ems_shield\n",
+                            "last_run_at": null,
+                            "created_at": "2018-06-08 12:36:17",
+                            "updated_at": "2018-06-08 12:36:24"
                         }
                     ],
                     "meta": {
@@ -5920,15 +7050,15 @@
                             "user_id": "605c7610-1389-11e7-93ae-92361f002671",
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "user_role_id": "Owner",
-                            "created_at": "2018-05-23 12:06:42",
-                            "updated_at": "2018-05-23 12:06:42"
+                            "created_at": "2018-06-08 12:36:17",
+                            "updated_at": "2018-06-08 12:36:17"
                         },
                         {
                             "user_id": "82b5da82-138c-11e7-93ae-92361f002671",
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "user_role_id": "Administrator",
-                            "created_at": "2018-05-23 12:06:42",
-                            "updated_at": "2018-05-23 12:06:42"
+                            "created_at": "2018-06-08 12:36:17",
+                            "updated_at": "2018-06-08 12:36:17"
                         }
                     ],
                     "meta": {
@@ -5975,43 +7105,43 @@
                             "ip_status_id": "Blocked",
                             "i18n_lang_id": "en",
                             "description": "Blocked access",
-                            "created_at": "2018-05-23 12:06:41",
-                            "updated_at": "2018-05-23 12:06:41"
+                            "created_at": "2018-06-08 12:36:15",
+                            "updated_at": "2018-06-08 12:36:15"
                         },
                         {
                             "ip_status_id": "Blocked",
                             "i18n_lang_id": "fr",
                             "description": "Acc\u00e8s bloqu\u00e9",
-                            "created_at": "2018-05-23 12:06:41",
-                            "updated_at": "2018-05-23 12:06:41"
+                            "created_at": "2018-06-08 12:36:15",
+                            "updated_at": "2018-06-08 12:36:15"
                         },
                         {
                             "ip_status_id": "None",
                             "i18n_lang_id": "en",
                             "description": "Unknown status, not blocked, not whitelisted",
-                            "created_at": "2018-05-23 12:06:41",
-                            "updated_at": "2018-05-23 12:06:41"
+                            "created_at": "2018-06-08 12:36:15",
+                            "updated_at": "2018-06-08 12:36:15"
                         },
                         {
                             "ip_status_id": "None",
                             "i18n_lang_id": "fr",
                             "description": "Statut inconnu, ni bloqu\u00e9e, ni whitelist\u00e9e",
-                            "created_at": "2018-05-23 12:06:41",
-                            "updated_at": "2018-05-23 12:06:41"
+                            "created_at": "2018-06-08 12:36:15",
+                            "updated_at": "2018-06-08 12:36:15"
                         },
                         {
                             "ip_status_id": "Whitelisted",
                             "i18n_lang_id": "en",
                             "description": "Allowed access",
-                            "created_at": "2018-05-23 12:06:41",
-                            "updated_at": "2018-05-23 12:06:41"
+                            "created_at": "2018-06-08 12:36:15",
+                            "updated_at": "2018-06-08 12:36:15"
                         },
                         {
                             "ip_status_id": "Whitelisted",
                             "i18n_lang_id": "fr",
                             "description": "Acc\u00e8s autoris\u00e9",
-                            "created_at": "2018-05-23 12:06:41",
-                            "updated_at": "2018-05-23 12:06:41"
+                            "created_at": "2018-06-08 12:36:15",
+                            "updated_at": "2018-06-08 12:36:15"
                         }
                     ],
                     "meta": {
@@ -6035,8 +7165,8 @@
                             "ip_status_id": "Whitelisted",
                             "v6": false,
                             "expires_at": null,
-                            "created_at": "2018-05-23 12:06:42",
-                            "updated_at": "2018-05-23 12:06:42"
+                            "created_at": "2018-06-08 12:36:17",
+                            "updated_at": "2018-06-08 12:36:17"
                         },
                         {
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
@@ -6044,8 +7174,8 @@
                             "ip_status_id": "Blocked",
                             "v6": false,
                             "expires_at": null,
-                            "created_at": "2018-05-23 12:06:42",
-                            "updated_at": "2018-05-23 12:06:42"
+                            "created_at": "2018-06-08 12:36:17",
+                            "updated_at": "2018-06-08 12:36:17"
                         },
                         {
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
@@ -6053,8 +7183,8 @@
                             "ip_status_id": "None",
                             "v6": true,
                             "expires_at": null,
-                            "created_at": "2018-05-23 12:06:42",
-                            "updated_at": "2018-05-23 12:06:42"
+                            "created_at": "2018-06-08 12:36:17",
+                            "updated_at": "2018-06-08 12:36:17"
                         },
                         {
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
@@ -6062,8 +7192,8 @@
                             "ip_status_id": "Whitelisted",
                             "v6": false,
                             "expires_at": null,
-                            "created_at": "2018-05-23 12:06:42",
-                            "updated_at": "2018-05-23 12:06:42"
+                            "created_at": "2018-06-08 12:36:17",
+                            "updated_at": "2018-06-08 12:36:17"
                         },
                         {
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
@@ -6071,8 +7201,8 @@
                             "ip_status_id": "None",
                             "v6": false,
                             "expires_at": "2018-07-10 08:30:00",
-                            "created_at": "2018-05-23 12:06:42",
-                            "updated_at": "2018-05-23 12:06:42"
+                            "created_at": "2018-06-08 12:36:17",
+                            "updated_at": "2018-06-08 12:36:17"
                         }
                     ],
                     "meta": {
@@ -6098,8 +7228,8 @@
                             "user_id": "605c7610-1389-11e7-93ae-92361f002671",
                             "entry": "Checking IP address",
                             "position": 1,
-                            "created_at": "2018-05-23 12:06:42",
-                            "updated_at": "2018-05-23 12:06:42"
+                            "created_at": "2018-06-08 12:36:17",
+                            "updated_at": "2018-06-08 12:36:17"
                         },
                         {
                             "id": "7cea50e8-4dff-11e8-9c2d-fa7ae01bbebc",
@@ -6109,8 +7239,8 @@
                             "user_id": "82b5da82-138c-11e7-93ae-92361f002671",
                             "entry": "googlebot (https:\/\/whatismyipaddress.com\/ip\/66.249.79.8)",
                             "position": 2,
-                            "created_at": "2018-05-23 12:06:44",
-                            "updated_at": "2018-05-23 12:06:44"
+                            "created_at": "2018-06-08 12:36:19",
+                            "updated_at": "2018-06-08 12:36:19"
                         },
                         {
                             "id": "83a0bf9e-4dff-11e8-9c2d-fa7ae01bbebc",
@@ -6120,8 +7250,8 @@
                             "user_id": null,
                             "entry": "kask.fi (https:\/\/www.abuseipdb.com\/check\/195.154.168.140)",
                             "position": 1,
-                            "created_at": "2018-05-23 12:06:44",
-                            "updated_at": "2018-05-23 12:06:44"
+                            "created_at": "2018-06-08 12:36:19",
+                            "updated_at": "2018-06-08 12:36:19"
                         },
                         {
                             "id": "b9b4a03c-4dff-11e8-9c2d-fa7ae01bbebc",
@@ -6131,8 +7261,8 @@
                             "user_id": null,
                             "entry": "Amiens, E-monsite devs (https:\/\/whatismyipaddress.com\/ip\/193.248.37.16)",
                             "position": 1,
-                            "created_at": "2018-05-23 12:06:44",
-                            "updated_at": "2018-05-23 12:06:44"
+                            "created_at": "2018-06-08 12:36:19",
+                            "updated_at": "2018-06-08 12:36:19"
                         },
                         {
                             "id": "dfe56c96-4dff-11e8-9c2d-fa7ae01bbebc",
@@ -6142,8 +7272,8 @@
                             "user_id": null,
                             "entry": "Yahoo! (https:\/\/www.ip-finder.me\/98.139.190.58\/)",
                             "position": 1,
-                            "created_at": "2018-05-23 12:06:44",
-                            "updated_at": "2018-05-23 12:06:44"
+                            "created_at": "2018-06-08 12:36:19",
+                            "updated_at": "2018-06-08 12:36:19"
                         },
                         {
                             "id": "f5ee09ee-4dff-11e8-9c2d-fa7ae01bbebc",
@@ -6153,8 +7283,8 @@
                             "user_id": null,
                             "entry": "Random IPv6",
                             "position": 1,
-                            "created_at": "2018-05-23 12:06:44",
-                            "updated_at": "2018-05-23 12:06:44"
+                            "created_at": "2018-06-08 12:36:19",
+                            "updated_at": "2018-06-08 12:36:19"
                         }
                     ],
                     "meta": {
@@ -6176,57 +7306,57 @@
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "name": "bad bot",
                             "color": "#ff3333",
-                            "created_at": "2018-05-23 12:06:44",
-                            "updated_at": "2018-05-23 12:06:44"
+                            "created_at": "2018-06-08 12:36:19",
+                            "updated_at": "2018-06-08 12:36:19"
                         },
                         {
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "name": "googlebot",
                             "color": "#55ff55",
-                            "created_at": "2018-05-23 12:06:44",
-                            "updated_at": "2018-05-23 12:06:44"
+                            "created_at": "2018-06-08 12:36:19",
+                            "updated_at": "2018-06-08 12:36:19"
                         },
                         {
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "name": "kask.fi",
                             "color": "#ff8c00",
-                            "created_at": "2018-05-23 12:06:44",
-                            "updated_at": "2018-05-23 12:06:44"
+                            "created_at": "2018-06-08 12:36:19",
+                            "updated_at": "2018-06-08 12:36:19"
                         },
                         {
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "name": "permaban",
                             "color": "#ff3333",
-                            "created_at": "2018-05-23 12:06:44",
-                            "updated_at": "2018-05-23 12:06:44"
+                            "created_at": "2018-06-08 12:36:19",
+                            "updated_at": "2018-06-08 12:36:19"
                         },
                         {
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "name": "sample ip",
                             "color": "#99c2ff",
-                            "created_at": "2018-05-23 12:06:44",
-                            "updated_at": "2018-05-23 12:06:44"
+                            "created_at": "2018-06-08 12:36:19",
+                            "updated_at": "2018-06-08 12:36:19"
                         },
                         {
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "name": "sample project",
                             "color": "#99c2ff",
-                            "created_at": "2018-05-23 12:06:44",
-                            "updated_at": "2018-05-23 12:06:44"
+                            "created_at": "2018-06-08 12:36:19",
+                            "updated_at": "2018-06-08 12:36:19"
                         },
                         {
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "name": "sample tag",
                             "color": "#99c2ff",
-                            "created_at": "2018-05-23 12:06:44",
-                            "updated_at": "2018-05-23 12:06:44"
+                            "created_at": "2018-06-08 12:36:19",
+                            "updated_at": "2018-06-08 12:36:19"
                         },
                         {
                             "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "name": "softban",
                             "color": "#ff8c00",
-                            "created_at": "2018-05-23 12:06:44",
-                            "updated_at": "2018-05-23 12:06:44"
+                            "created_at": "2018-06-08 12:36:19",
+                            "updated_at": "2018-06-08 12:36:19"
                         }
                     ],
                     "meta": {
@@ -6250,8 +7380,8 @@
                             "project_tag_name": "bad bot",
                             "taggable_id": "195.154.168.140",
                             "taggable_type": "App\\Models\\Ip",
-                            "created_at": "2018-05-23 12:06:44",
-                            "updated_at": "2018-05-23 12:06:44"
+                            "created_at": "2018-06-08 12:36:19",
+                            "updated_at": "2018-06-08 12:36:19"
                         },
                         {
                             "id": "2524b9b4-58e7-11e8-9c2d-fa7ae01bbebc",
@@ -6259,8 +7389,8 @@
                             "project_tag_name": "kask.fi",
                             "taggable_id": "195.154.168.140",
                             "taggable_type": "App\\Models\\Ip",
-                            "created_at": "2018-05-23 12:06:46",
-                            "updated_at": "2018-05-23 12:06:46"
+                            "created_at": "2018-06-08 12:36:21",
+                            "updated_at": "2018-06-08 12:36:21"
                         },
                         {
                             "id": "3dcd00ac-5838-11e8-9c2d-fa7ae01bbebc",
@@ -6268,8 +7398,8 @@
                             "project_tag_name": "googlebot",
                             "taggable_id": "66.249.79.8",
                             "taggable_type": "App\\Models\\Ip",
-                            "created_at": "2018-05-23 12:06:44",
-                            "updated_at": "2018-05-23 12:06:44"
+                            "created_at": "2018-06-08 12:36:19",
+                            "updated_at": "2018-06-08 12:36:19"
                         },
                         {
                             "id": "cfa66100-5836-11e8-9c2d-fa7ae01bbebc",
@@ -6277,14 +7407,119 @@
                             "project_tag_name": "sample project",
                             "taggable_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
                             "taggable_type": "App\\Models\\Project",
-                            "created_at": "2018-05-23 12:06:44",
-                            "updated_at": "2018-05-23 12:06:44"
+                            "created_at": "2018-06-08 12:36:19",
+                            "updated_at": "2018-06-08 12:36:19"
                         }
                     ],
                     "meta": {
                         "pagination": {
                             "total": 4,
                             "count": 4,
+                            "per_page": 20,
+                            "current_page": 1,
+                            "total_pages": 1,
+                            "links": []
+                        }
+                    }
+                }
+            },
+            "ServerIndexExampleResponse": {
+                "value": {
+                    "data": [
+                        {
+                            "id": "1a1083f0-628d-11e8-adc0-fa7ae01bbebc",
+                            "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
+                            "user_id": "605c7610-1389-11e7-93ae-92361f002671",
+                            "name": "Sample Server",
+                            "ip": "123.123.123.123",
+                            "port": 22,
+                            "login": "ems_shield",
+                            "enabled": 1,
+                            "position": 1,
+                            "created_at": "2018-06-08 12:36:21",
+                            "updated_at": "2018-06-08 12:36:21"
+                        }
+                    ],
+                    "meta": {
+                        "pagination": {
+                            "total": 1,
+                            "count": 1,
+                            "per_page": 20,
+                            "current_page": 1,
+                            "total_pages": 1,
+                            "links": []
+                        }
+                    }
+                }
+            },
+            "ServerLogIndexExampleResponse": {
+                "value": {
+                    "data": [
+                        {
+                            "id": "412971e2-6321-11e8-adc0-fa7ae01bbebc",
+                            "server_id": "1a1083f0-628d-11e8-adc0-fa7ae01bbebc",
+                            "status": "COMPLETED",
+                            "output": "server log test 1...",
+                            "position": 1,
+                            "started_at": "2018-05-27 10:45:35",
+                            "finished_at": "2018-05-27 10:46:10",
+                            "created_at": "2018-06-08 12:36:21",
+                            "updated_at": "2018-06-08 12:36:21"
+                        },
+                        {
+                            "id": "505496f6-6321-11e8-adc0-fa7ae01bbebc",
+                            "server_id": "1a1083f0-628d-11e8-adc0-fa7ae01bbebc",
+                            "status": "COMPLETED",
+                            "output": "server log test 3...",
+                            "position": 3,
+                            "started_at": "2018-05-28 14:01:27",
+                            "finished_at": "2018-05-28 14:01:32",
+                            "created_at": "2018-06-08 12:36:21",
+                            "updated_at": "2018-06-08 12:36:21"
+                        },
+                        {
+                            "id": "8965d40a-631c-11e8-adc0-fa7ae01bbebc",
+                            "server_id": "1a1083f0-628d-11e8-adc0-fa7ae01bbebc",
+                            "status": "COMPLETED",
+                            "output": "server log test 2...",
+                            "position": 2,
+                            "started_at": "2018-05-28 09:20:12",
+                            "finished_at": "2018-05-28 09:20:42",
+                            "created_at": "2018-06-08 12:36:21",
+                            "updated_at": "2018-06-08 12:36:21"
+                        }
+                    ],
+                    "meta": {
+                        "pagination": {
+                            "total": 3,
+                            "count": 3,
+                            "per_page": 20,
+                            "current_page": 1,
+                            "total_pages": 1,
+                            "links": []
+                        }
+                    }
+                }
+            },
+            "DeployTaskIndexExampleResponse": {
+                "value": {
+                    "data": [
+                        {
+                            "id": "b7b39852-6334-11e8-adc0-fa7ae01bbebc",
+                            "project_id": "9fee04c4-3f11-11e8-b467-0ed5f89f718b",
+                            "user_id": null,
+                            "status": "COMPLETED",
+                            "output": "Sample server deploy task sample...",
+                            "started_at": "2018-05-27 10:45:35",
+                            "finished_at": "2018-05-28 14:01:32",
+                            "created_at": "2018-06-08 12:36:21",
+                            "updated_at": "2018-06-08 12:36:21"
+                        }
+                    ],
+                    "meta": {
+                        "pagination": {
+                            "total": 1,
+                            "count": 1,
                             "per_page": 20,
                             "current_page": 1,
                             "total_pages": 1,

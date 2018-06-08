@@ -141,6 +141,8 @@ class UserHasProjectManager
 							$this->apiClient, 
 							$data['project']['data']['id'], 
 							$data['project']['data']['name'], 
+							$data['project']['data']['public_key'], 
+							$data['project']['data']['last_run_at'], 
 							$data['project']['data']['created_at'], 
 							$data['project']['data']['updated_at']
 						)
@@ -238,6 +240,8 @@ class UserHasProjectManager
 						$this->apiClient, 
 						$requestBody['data']['project']['data']['id'], 
 						$requestBody['data']['project']['data']['name'], 
+						$requestBody['data']['project']['data']['public_key'], 
+						$requestBody['data']['project']['data']['last_run_at'], 
 						$requestBody['data']['project']['data']['created_at'], 
 						$requestBody['data']['project']['data']['updated_at']
 					)
@@ -328,6 +332,8 @@ class UserHasProjectManager
 						$this->apiClient, 
 						$requestBody['data']['project']['data']['id'], 
 						$requestBody['data']['project']['data']['name'], 
+						$requestBody['data']['project']['data']['public_key'], 
+						$requestBody['data']['project']['data']['last_run_at'], 
 						$requestBody['data']['project']['data']['created_at'], 
 						$requestBody['data']['project']['data']['updated_at']
 					)
@@ -421,6 +427,8 @@ class UserHasProjectManager
 						$this->apiClient, 
 						$requestBody['data']['project']['data']['id'], 
 						$requestBody['data']['project']['data']['name'], 
+						$requestBody['data']['project']['data']['public_key'], 
+						$requestBody['data']['project']['data']['last_run_at'], 
 						$requestBody['data']['project']['data']['created_at'], 
 						$requestBody['data']['project']['data']['updated_at']
 					)

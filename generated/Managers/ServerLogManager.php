@@ -4,19 +4,19 @@ namespace EmsShield\Api\Managers;
 
 use EmsShield\Api\ApiClient;
 use EmsShield\Api\Exceptions\UnexpectedResponseException;
-use EmsShield\Api\Resources\ProjectListResponse;
+use EmsShield\Api\Resources\ServerLogListResponse;
 use EmsShield\Api\Resources\ErrorResponse;
-use EmsShield\Api\Resources\ProjectResponse;
-use EmsShield\Api\Resources\Project;
+use EmsShield\Api\Resources\ServerLogResponse;
+use EmsShield\Api\Resources\ServerLog;
 use EmsShield\Api\Resources\Meta;
 use EmsShield\Api\Resources\Pagination;
 
 /**
- * Project manager class
+ * ServerLog manager class
  * 
  * @package EmsShield\Api\Managers
  */
-class ProjectManager 
+class ServerLogManager 
 {
 	/**
 	 * API client
@@ -26,7 +26,7 @@ class ProjectManager
 	protected $apiClient;
 
 	/**
-	 * Project manager class constructor
+	 * ServerLog manager class constructor
 	 *
 	 * @param ApiClient $apiClient API Client to use for this manager requests
 	 */
@@ -46,7 +46,7 @@ class ProjectManager
 	}
 
 	/**
-	 * Show project list
+	 * Show server log list
 	 * 
 	 * Excepted HTTP code : 200
 	 * 
@@ -56,13 +56,13 @@ class ProjectManager
 	 * @param int $limit Format: int32. Pagination : Maximum entries per page
 	 * @param string $order_by Order by : {field},[asc|desc]
 	 * 
-	 * @return ProjectListResponse
+	 * @return ServerLogListResponse
 	 * 
 	 * @throws UnexpectedResponseException
 	 */
 	public function all($include = null, $search = null, $page = null, $limit = null, $order_by = null)
 	{
-		$routeUrl = '/api/project';
+		$routeUrl = '/api/serverLog';
 
 		$queryParameters = [];
 
@@ -107,15 +107,19 @@ class ProjectManager
 
 		$requestBody = json_decode((string) $request->getBody(), true);
 
-		$response = new ProjectListResponse(
+		$response = new ServerLogListResponse(
 			$this->apiClient, 
 			array_map(function($data) {
-				return new Project(
+				return new ServerLog(
 					$this->apiClient, 
 					$data['id'], 
-					$data['name'], 
-					$data['public_key'], 
-					$data['last_run_at'], 
+					$data['server_id'], 
+					$data['deploy_task_id'], 
+					$data['status'], 
+					$data['output'], 
+					$data['position'], 
+					$data['started_at'], 
+					$data['finished_at'], 
 					$data['created_at'], 
 					$data['updated_at']
 				); 
@@ -138,82 +142,22 @@ class ProjectManager
 	}
 	
 	/**
-	 * Create and store a new project
-	 * 
-	 * Excepted HTTP code : 201
-	 * 
-	 * @param string $name
-	 * @param mixed $tags
-	 * 
-	 * @return ProjectResponse
-	 * 
-	 * @throws UnexpectedResponseException
-	 */
-	public function create($name, $tags = null)
-	{
-		$routeUrl = '/api/project';
-
-		$bodyParameters = [];
-		$bodyParameters['name'] = $name;
-
-		if (!is_null($tags)) {
-			$bodyParameters['tags'] = $tags;
-		}
-
-		$requestOptions = [];
-		$requestOptions['form_params'] = $bodyParameters;
-
-		$request = $this->apiClient->getHttpClient()->request('post', $routeUrl, $requestOptions);
-
-		if ($request->getStatusCode() != 201) {
-			$requestBody = json_decode((string) $request->getBody(), true);
-
-			$apiExceptionResponse = new ErrorResponse(
-				$this->apiClient, 
-				$requestBody['message'], 
-				(isset($requestBody['errors']) ? $requestBody['errors'] : null), 
-				(isset($requestBody['status_code']) ? $requestBody['status_code'] : null), 
-				(isset($requestBody['debug']) ? $requestBody['debug'] : null)
-			);
-
-			throw new UnexpectedResponseException($request->getStatusCode(), 201, $request, $apiExceptionResponse);
-		}
-
-		$requestBody = json_decode((string) $request->getBody(), true);
-
-		$response = new ProjectResponse(
-			$this->apiClient, 
-			new Project(
-				$this->apiClient, 
-				$requestBody['data']['id'], 
-				$requestBody['data']['name'], 
-				$requestBody['data']['public_key'], 
-				$requestBody['data']['last_run_at'], 
-				$requestBody['data']['created_at'], 
-				$requestBody['data']['updated_at']
-			)
-		);
-
-		return $response;
-	}
-	
-	/**
-	 * Get specified project
+	 * Get specified server log
 	 * 
 	 * Excepted HTTP code : 200
 	 * 
-	 * @param string $projectId Project UUID
+	 * @param string $serverLogId Server Log UUID
 	 * 
-	 * @return ProjectResponse
+	 * @return ServerLogResponse
 	 * 
 	 * @throws UnexpectedResponseException
 	 */
-	public function get($projectId)
+	public function get($serverLogId)
 	{
-		$routePath = '/api/project/{projectId}';
+		$routePath = '/api/serverLog/{serverLogId}';
 
 		$pathReplacements = [
-			'{projectId}' => $projectId,
+			'{serverLogId}' => $serverLogId,
 		];
 
 		$routeUrl = str_replace(array_keys($pathReplacements), array_values($pathReplacements), $routePath);
@@ -238,14 +182,18 @@ class ProjectManager
 
 		$requestBody = json_decode((string) $request->getBody(), true);
 
-		$response = new ProjectResponse(
+		$response = new ServerLogResponse(
 			$this->apiClient, 
-			new Project(
+			new ServerLog(
 				$this->apiClient, 
 				$requestBody['data']['id'], 
-				$requestBody['data']['name'], 
-				$requestBody['data']['public_key'], 
-				$requestBody['data']['last_run_at'], 
+				$requestBody['data']['server_id'], 
+				$requestBody['data']['deploy_task_id'], 
+				$requestBody['data']['status'], 
+				$requestBody['data']['output'], 
+				$requestBody['data']['position'], 
+				$requestBody['data']['started_at'], 
+				$requestBody['data']['finished_at'], 
 				$requestBody['data']['created_at'], 
 				$requestBody['data']['updated_at']
 			)
@@ -255,97 +203,22 @@ class ProjectManager
 	}
 	
 	/**
-	 * Update a specified project
-	 * 
-	 * <aside class="notice">Only <code>Owner</code> of project is allowed to update it.</aside>
-	 * 
-	 * Excepted HTTP code : 200
-	 * 
-	 * @param string $projectId Project UUID
-	 * @param string $name
-	 * @param mixed $tags
-	 * 
-	 * @return ProjectResponse
-	 * 
-	 * @throws UnexpectedResponseException
-	 */
-	public function update($projectId, $name = null, $tags = null)
-	{
-		$routePath = '/api/project/{projectId}';
-
-		$pathReplacements = [
-			'{projectId}' => $projectId,
-		];
-
-		$routeUrl = str_replace(array_keys($pathReplacements), array_values($pathReplacements), $routePath);
-
-		$bodyParameters = [];
-
-		if (!is_null($name)) {
-			$bodyParameters['name'] = $name;
-		}
-
-		if (!is_null($tags)) {
-			$bodyParameters['tags'] = $tags;
-		}
-
-		$requestOptions = [];
-		$requestOptions['form_params'] = $bodyParameters;
-
-		$request = $this->apiClient->getHttpClient()->request('patch', $routeUrl, $requestOptions);
-
-		if ($request->getStatusCode() != 200) {
-			$requestBody = json_decode((string) $request->getBody(), true);
-
-			$apiExceptionResponse = new ErrorResponse(
-				$this->apiClient, 
-				$requestBody['message'], 
-				(isset($requestBody['errors']) ? $requestBody['errors'] : null), 
-				(isset($requestBody['status_code']) ? $requestBody['status_code'] : null), 
-				(isset($requestBody['debug']) ? $requestBody['debug'] : null)
-			);
-
-			throw new UnexpectedResponseException($request->getStatusCode(), 200, $request, $apiExceptionResponse);
-		}
-
-		$requestBody = json_decode((string) $request->getBody(), true);
-
-		$response = new ProjectResponse(
-			$this->apiClient, 
-			new Project(
-				$this->apiClient, 
-				$requestBody['data']['id'], 
-				$requestBody['data']['name'], 
-				$requestBody['data']['public_key'], 
-				$requestBody['data']['last_run_at'], 
-				$requestBody['data']['created_at'], 
-				$requestBody['data']['updated_at']
-			)
-		);
-
-		return $response;
-	}
-	
-	/**
-	 * Delete specified project
-	 * 
-	 * All relationships between the project and his users will be automatically deleted too.<br />
-	 * <aside class="notice">Only <code>Owner</code> of project is allowed to delete it.</aside>
+	 * Delete specified server log
 	 * 
 	 * Excepted HTTP code : 204
 	 * 
-	 * @param string $projectId Project UUID
+	 * @param string $serverLogId Server Log UUID
 	 * 
 	 * @return ErrorResponse
 	 * 
 	 * @throws UnexpectedResponseException
 	 */
-	public function delete($projectId)
+	public function delete($serverLogId)
 	{
-		$routePath = '/api/project/{projectId}';
+		$routePath = '/api/serverLog/{serverLogId}';
 
 		$pathReplacements = [
-			'{projectId}' => $projectId,
+			'{serverLogId}' => $serverLogId,
 		];
 
 		$routeUrl = str_replace(array_keys($pathReplacements), array_values($pathReplacements), $routePath);

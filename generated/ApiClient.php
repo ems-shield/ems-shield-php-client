@@ -20,6 +20,9 @@ use EmsShield\Api\Managers\IpManager;
 use EmsShield\Api\Managers\IpLogManager;
 use EmsShield\Api\Managers\ProjectTagManager;
 use EmsShield\Api\Managers\ProjectTaggableManager;
+use EmsShield\Api\Managers\ServerManager;
+use EmsShield\Api\Managers\ServerLogManager;
+use EmsShield\Api\Managers\DeployTaskManager;
 
 /**
  * ems-shield client class (version 1.0)
@@ -148,6 +151,27 @@ class ApiClient
 	protected $projectTaggableManager;
 
 	/**
+	 * Server manager
+	 *
+	 * @var ServerManager
+	 */
+	protected $serverManager;
+
+	/**
+	 * ServerLog manager
+	 *
+	 * @var ServerLogManager
+	 */
+	protected $serverLogManager;
+
+	/**
+	 * DeployTask manager
+	 *
+	 * @var DeployTaskManager
+	 */
+	protected $deployTaskManager;
+
+	/**
 	 * API Client class constructor
 	 *
 	 * @param string $bearerToken Bearer authentication access token
@@ -195,6 +219,9 @@ class ApiClient
 		$this->ipLogManager = new IpLogManager($this);
 		$this->projectTagManager = new ProjectTagManager($this);
 		$this->projectTaggableManager = new ProjectTaggableManager($this);
+		$this->serverManager = new ServerManager($this);
+		$this->serverLogManager = new ServerLogManager($this);
+		$this->deployTaskManager = new DeployTaskManager($this);
 	}
 
 	/**
@@ -355,5 +382,35 @@ class ApiClient
 	public function ProjectTaggableManager()
 	{
 		return $this->projectTaggableManager;
+	}
+	
+	/**
+	 * Return the Server manager
+	 *
+	 * @return ServerManager
+	 */
+	public function ServerManager()
+	{
+		return $this->serverManager;
+	}
+	
+	/**
+	 * Return the ServerLog manager
+	 *
+	 * @return ServerLogManager
+	 */
+	public function ServerLogManager()
+	{
+		return $this->serverLogManager;
+	}
+	
+	/**
+	 * Return the DeployTask manager
+	 *
+	 * @return DeployTaskManager
+	 */
+	public function DeployTaskManager()
+	{
+		return $this->deployTaskManager;
 	}
 }

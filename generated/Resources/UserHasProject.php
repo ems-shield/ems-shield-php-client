@@ -166,6 +166,8 @@ class UserHasProject
 						$this->apiClient, 
 						$requestBody['data']['project']['data']['id'], 
 						$requestBody['data']['project']['data']['name'], 
+						$requestBody['data']['project']['data']['public_key'], 
+						$requestBody['data']['project']['data']['last_run_at'], 
 						$requestBody['data']['project']['data']['created_at'], 
 						$requestBody['data']['project']['data']['updated_at']
 					)

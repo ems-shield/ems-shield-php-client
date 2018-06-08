@@ -4,19 +4,19 @@ namespace EmsShield\Api\Managers;
 
 use EmsShield\Api\ApiClient;
 use EmsShield\Api\Exceptions\UnexpectedResponseException;
-use EmsShield\Api\Resources\ProjectListResponse;
+use EmsShield\Api\Resources\DeployTaskListResponse;
 use EmsShield\Api\Resources\ErrorResponse;
-use EmsShield\Api\Resources\ProjectResponse;
-use EmsShield\Api\Resources\Project;
+use EmsShield\Api\Resources\DeployTaskResponse;
+use EmsShield\Api\Resources\DeployTask;
 use EmsShield\Api\Resources\Meta;
 use EmsShield\Api\Resources\Pagination;
 
 /**
- * Project manager class
+ * DeployTask manager class
  * 
  * @package EmsShield\Api\Managers
  */
-class ProjectManager 
+class DeployTaskManager 
 {
 	/**
 	 * API client
@@ -26,7 +26,7 @@ class ProjectManager
 	protected $apiClient;
 
 	/**
-	 * Project manager class constructor
+	 * DeployTask manager class constructor
 	 *
 	 * @param ApiClient $apiClient API Client to use for this manager requests
 	 */
@@ -46,7 +46,7 @@ class ProjectManager
 	}
 
 	/**
-	 * Show project list
+	 * Show deploy task list
 	 * 
 	 * Excepted HTTP code : 200
 	 * 
@@ -56,13 +56,13 @@ class ProjectManager
 	 * @param int $limit Format: int32. Pagination : Maximum entries per page
 	 * @param string $order_by Order by : {field},[asc|desc]
 	 * 
-	 * @return ProjectListResponse
+	 * @return DeployTaskListResponse
 	 * 
 	 * @throws UnexpectedResponseException
 	 */
 	public function all($include = null, $search = null, $page = null, $limit = null, $order_by = null)
 	{
-		$routeUrl = '/api/project';
+		$routeUrl = '/api/deployTask';
 
 		$queryParameters = [];
 
@@ -107,15 +107,18 @@ class ProjectManager
 
 		$requestBody = json_decode((string) $request->getBody(), true);
 
-		$response = new ProjectListResponse(
+		$response = new DeployTaskListResponse(
 			$this->apiClient, 
 			array_map(function($data) {
-				return new Project(
+				return new DeployTask(
 					$this->apiClient, 
 					$data['id'], 
-					$data['name'], 
-					$data['public_key'], 
-					$data['last_run_at'], 
+					$data['project_id'], 
+					$data['user_id'], 
+					$data['status'], 
+					$data['output'], 
+					$data['started_at'], 
+					$data['finished_at'], 
 					$data['created_at'], 
 					$data['updated_at']
 				); 
@@ -138,27 +141,22 @@ class ProjectManager
 	}
 	
 	/**
-	 * Create and store a new project
+	 * Create and store a new deploy task
 	 * 
 	 * Excepted HTTP code : 201
 	 * 
-	 * @param string $name
-	 * @param mixed $tags
+	 * @param string $project_id Format: uuid.
 	 * 
-	 * @return ProjectResponse
+	 * @return DeployTaskResponse
 	 * 
 	 * @throws UnexpectedResponseException
 	 */
-	public function create($name, $tags = null)
+	public function create($project_id)
 	{
-		$routeUrl = '/api/project';
+		$routeUrl = '/api/deployTask';
 
 		$bodyParameters = [];
-		$bodyParameters['name'] = $name;
-
-		if (!is_null($tags)) {
-			$bodyParameters['tags'] = $tags;
-		}
+		$bodyParameters['project_id'] = $project_id;
 
 		$requestOptions = [];
 		$requestOptions['form_params'] = $bodyParameters;
@@ -181,14 +179,17 @@ class ProjectManager
 
 		$requestBody = json_decode((string) $request->getBody(), true);
 
-		$response = new ProjectResponse(
+		$response = new DeployTaskResponse(
 			$this->apiClient, 
-			new Project(
+			new DeployTask(
 				$this->apiClient, 
 				$requestBody['data']['id'], 
-				$requestBody['data']['name'], 
-				$requestBody['data']['public_key'], 
-				$requestBody['data']['last_run_at'], 
+				$requestBody['data']['project_id'], 
+				$requestBody['data']['user_id'], 
+				$requestBody['data']['status'], 
+				$requestBody['data']['output'], 
+				$requestBody['data']['started_at'], 
+				$requestBody['data']['finished_at'], 
 				$requestBody['data']['created_at'], 
 				$requestBody['data']['updated_at']
 			)
@@ -198,22 +199,22 @@ class ProjectManager
 	}
 	
 	/**
-	 * Get specified project
+	 * Get specified deploy task
 	 * 
 	 * Excepted HTTP code : 200
 	 * 
-	 * @param string $projectId Project UUID
+	 * @param string $deployTaskId Deploy Task UUID
 	 * 
-	 * @return ProjectResponse
+	 * @return DeployTaskResponse
 	 * 
 	 * @throws UnexpectedResponseException
 	 */
-	public function get($projectId)
+	public function get($deployTaskId)
 	{
-		$routePath = '/api/project/{projectId}';
+		$routePath = '/api/deployTask/{deployTaskId}';
 
 		$pathReplacements = [
-			'{projectId}' => $projectId,
+			'{deployTaskId}' => $deployTaskId,
 		];
 
 		$routeUrl = str_replace(array_keys($pathReplacements), array_values($pathReplacements), $routePath);
@@ -238,14 +239,17 @@ class ProjectManager
 
 		$requestBody = json_decode((string) $request->getBody(), true);
 
-		$response = new ProjectResponse(
+		$response = new DeployTaskResponse(
 			$this->apiClient, 
-			new Project(
+			new DeployTask(
 				$this->apiClient, 
 				$requestBody['data']['id'], 
-				$requestBody['data']['name'], 
-				$requestBody['data']['public_key'], 
-				$requestBody['data']['last_run_at'], 
+				$requestBody['data']['project_id'], 
+				$requestBody['data']['user_id'], 
+				$requestBody['data']['status'], 
+				$requestBody['data']['output'], 
+				$requestBody['data']['started_at'], 
+				$requestBody['data']['finished_at'], 
 				$requestBody['data']['created_at'], 
 				$requestBody['data']['updated_at']
 			)
@@ -255,97 +259,22 @@ class ProjectManager
 	}
 	
 	/**
-	 * Update a specified project
-	 * 
-	 * <aside class="notice">Only <code>Owner</code> of project is allowed to update it.</aside>
-	 * 
-	 * Excepted HTTP code : 200
-	 * 
-	 * @param string $projectId Project UUID
-	 * @param string $name
-	 * @param mixed $tags
-	 * 
-	 * @return ProjectResponse
-	 * 
-	 * @throws UnexpectedResponseException
-	 */
-	public function update($projectId, $name = null, $tags = null)
-	{
-		$routePath = '/api/project/{projectId}';
-
-		$pathReplacements = [
-			'{projectId}' => $projectId,
-		];
-
-		$routeUrl = str_replace(array_keys($pathReplacements), array_values($pathReplacements), $routePath);
-
-		$bodyParameters = [];
-
-		if (!is_null($name)) {
-			$bodyParameters['name'] = $name;
-		}
-
-		if (!is_null($tags)) {
-			$bodyParameters['tags'] = $tags;
-		}
-
-		$requestOptions = [];
-		$requestOptions['form_params'] = $bodyParameters;
-
-		$request = $this->apiClient->getHttpClient()->request('patch', $routeUrl, $requestOptions);
-
-		if ($request->getStatusCode() != 200) {
-			$requestBody = json_decode((string) $request->getBody(), true);
-
-			$apiExceptionResponse = new ErrorResponse(
-				$this->apiClient, 
-				$requestBody['message'], 
-				(isset($requestBody['errors']) ? $requestBody['errors'] : null), 
-				(isset($requestBody['status_code']) ? $requestBody['status_code'] : null), 
-				(isset($requestBody['debug']) ? $requestBody['debug'] : null)
-			);
-
-			throw new UnexpectedResponseException($request->getStatusCode(), 200, $request, $apiExceptionResponse);
-		}
-
-		$requestBody = json_decode((string) $request->getBody(), true);
-
-		$response = new ProjectResponse(
-			$this->apiClient, 
-			new Project(
-				$this->apiClient, 
-				$requestBody['data']['id'], 
-				$requestBody['data']['name'], 
-				$requestBody['data']['public_key'], 
-				$requestBody['data']['last_run_at'], 
-				$requestBody['data']['created_at'], 
-				$requestBody['data']['updated_at']
-			)
-		);
-
-		return $response;
-	}
-	
-	/**
-	 * Delete specified project
-	 * 
-	 * All relationships between the project and his users will be automatically deleted too.<br />
-	 * <aside class="notice">Only <code>Owner</code> of project is allowed to delete it.</aside>
+	 * Delete specified deploy task
 	 * 
 	 * Excepted HTTP code : 204
 	 * 
-	 * @param string $projectId Project UUID
+	 * @param string $deployTaskId Deploy Task UUID
 	 * 
 	 * @return ErrorResponse
 	 * 
 	 * @throws UnexpectedResponseException
 	 */
-	public function delete($projectId)
+	public function delete($deployTaskId)
 	{
-		$routePath = '/api/project/{projectId}';
+		$routePath = '/api/deployTask/{deployTaskId}';
 
 		$pathReplacements = [
-			'{projectId}' => $projectId,
+			'{deployTaskId}' => $deployTaskId,
 		];
 
 		$routeUrl = str_replace(array_keys($pathReplacements), array_values($pathReplacements), $routePath);
