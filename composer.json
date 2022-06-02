@@ -31,6 +31,6 @@
 		"phpunit/phpunit": "^6.3"
 	},
 	"require": {
-		"guzzlehttp/guzzle": "^6.3"
+		"guzzlehttp/guzzle": "^7"
 	}
 }
